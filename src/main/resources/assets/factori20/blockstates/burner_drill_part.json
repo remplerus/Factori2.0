@@ -1,0 +1,13 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "factori20:cube_none",
+		"textures" : {
+            "particle" : "factori20:blocks/burner_drill_component"
+		}
+	},
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}]
+    }
+}
