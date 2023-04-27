@@ -11,7 +11,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ChunkResourceDataProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+public class ChunkResourceCapability implements ICapabilityProvider, INBTSerializable<CompoundTag> {
     public static Capability<ChunkResourceData> INSTANCE = CapabilityManager.get(new CapabilityToken<>(){});
     private final ChunkResourceData data = new ChunkResourceData();
     private final LazyOptional<ChunkResourceData> dataOptional = LazyOptional.of(() -> data);

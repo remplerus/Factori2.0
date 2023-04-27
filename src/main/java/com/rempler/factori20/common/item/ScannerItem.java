@@ -1,7 +1,11 @@
 package com.rempler.factori20.common.item;
 
+import com.rempler.factori20.api.chunk.ChunkResourceData;
+import com.rempler.factori20.api.chunk.ChunkResourceGenerator;
+import com.rempler.factori20.api.chunk.ResourceType;
 import com.rempler.factori20.api.energy.AbstractEnergyItem;
 import com.rempler.factori20.utils.F20Config;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -12,6 +16,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import org.jetbrains.annotations.Nullable;
@@ -26,19 +31,46 @@ public class ScannerItem extends AbstractEnergyItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
-        if (stack.getItem() instanceof ScannerItem scanner && stack.getCapability(ForgeCapabilities.ENERGY).isPresent()) {
+        if (stack.getItem() instanceof ScannerItem scanner && stack.getCapability(ForgeCapabilities.ENERGY).isPresent() && !(pLevel.isClientSide)) {
+            ServerPlayer serverPlayer = (ServerPlayer) pPlayer;
             stack.getCapability(ForgeCapabilities.ENERGY).ifPresent(cap -> {
                 if (!(cap.getEnergyStored() < scanner.getEnergyCost(stack))) {
-                    if (stack.getDamageValue() == 0 && canUse(stack, pPlayer)) {
-                        if (!pLevel.isClientSide) {
-                            stack.setDamageValue(99);
-                            this.applyDamage(stack, (ServerPlayer) pPlayer);
-                            pLevel.playSound(null, pPlayer.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1, 0.1f);
+                    if (stack.getDamageValue() == 0 && canUse(stack, serverPlayer)) {
+                        BlockPos pos = serverPlayer.blockPosition();
+                        // Berechne den Chunk, in dem sich der Spieler befindet
+                        int chunkX = pos.getX() >> 4;
+                        int chunkZ = pos.getZ() >> 4;
+
+                        // Holen Sie sich die ChunkResourceData für den aktuellen Chunk
+                        ChunkResourceData resourceData = ChunkResourceGenerator.getChunkResourceData(new ChunkPos(chunkX, chunkZ));
+                        boolean success = false;
+                        if (!(resourceData == null)) {
+                            for (ResourceType resourceType : ResourceType.values()) {
+                                int amount = resourceData.getResourceAmount(resourceType);
+                                if (amount > 0) {
+                                    // Zeige die verfügbaren Erze an
+                                    serverPlayer.sendSystemMessage(Component.translatable("txt.f20.ores_available", resourceType.getName(), amount));
+                                    success = true;
+                                }
+
+                                stack.setDamageValue(99);
+                                this.applyDamage(stack, serverPlayer);
+                                if (success) {
+                                    pLevel.playSound(null, serverPlayer.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1, 0.1f);
+                                } else {
+                                    serverPlayer.sendSystemMessage(Component.translatable("txt.f20.no_ores_available"), true);
+                                }
+                            }
+                        } else {
+                            serverPlayer.sendSystemMessage(Component.literal("literaly no data :("));
                         }
                     } else {
-                        pPlayer.displayClientMessage(Component.translatable("txt.f20.scanner.on_cooldown", (stack.getDamageValue() / 20) + 1), true);
+                        serverPlayer.sendSystemMessage(Component.translatable("txt.f20.scanner.on_cooldown", (stack.getDamageValue() / 20) + 1), true);
                     }
-                }});
+                } else if (serverPlayer.isCreative() && serverPlayer.isShiftKeyDown()) {
+                    cap.receiveEnergy(100000, false);
+                }
+            });
         }
         return InteractionResultHolder.pass(stack);
     }

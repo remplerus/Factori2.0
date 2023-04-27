@@ -2,15 +2,19 @@ package com.rempler.factori20.api.chunk;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.util.INBTSerializable;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class ChunkResourceData implements INBTSerializable<CompoundTag> {
-    private final Map<ResourceType, Integer> resources;
+    private Map<ResourceType, Integer> resources;
 
     public ChunkResourceData() {
         resources = new EnumMap<>(ResourceType.class);
@@ -44,6 +48,26 @@ public class ChunkResourceData implements INBTSerializable<CompoundTag> {
 
     public static ChunkResourceData get(Level level, BlockPos pos) {
         LevelChunk chunk = level.getChunkAt(pos);
-        return chunk.getCapability(ChunkResourceDataProvider.INSTANCE).orElse(null);
+        return chunk.getCapability(ChunkResourceCapability.INSTANCE).orElse(null);
+    }
+
+    public void removeResource(ResourceType resourceType, int amount) {
+        int currentAmount = getResourceAmount(resourceType);
+        setResourceAmount(resourceType, Math.max(currentAmount - amount, 0));
+    }
+
+    public ResourceType getRandomResource(RandomSource random) {
+        List<ResourceType> availableResources = new ArrayList<>();
+        for (ResourceType resourceType : ResourceType.values()) {
+            if (getResourceAmount(resourceType) > 0) {
+                availableResources.add(resourceType);
+            }
+        }
+
+        if (availableResources.isEmpty()) {
+            return null;
+        }
+
+        return availableResources.get(random.nextInt(availableResources.size()));
     }
 }

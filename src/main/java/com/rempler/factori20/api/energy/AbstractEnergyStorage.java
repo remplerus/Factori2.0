@@ -102,9 +102,9 @@ public abstract class AbstractEnergyStorage implements IEnergyStorage {
         return energy;
     }
 
-    protected abstract void writeEnergy();
+    public abstract void writeEnergy();
 
-    protected abstract void updateEnergy();
+    public abstract void updateEnergy();
 
     protected void updateMaxEnergy() {
         this.energy = Math.min(getMaxEnergyStored(), energy);

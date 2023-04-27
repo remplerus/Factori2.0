@@ -1,13 +1,17 @@
 {
+  "block.factori20.burner_drill_block": "Burner Drill Block",
+  "block.factori20.electric_drill_block": "Electric Drill Block",
+  "f20.container.drill": "",
   "item.factori20.diamond_drill_head": "Diamond Drill Head",
   "item.factori20.emerald_drill_head": "Emerald Drill Head",
   "item.factori20.gold_drill_head": "Gold Drill Head",
   "item.factori20.iron_drill_head": "Iron Drill Head",
-  "item.factori20.ore_visualiser": "Ore Visualiser",
   "item.factori20.scanner": "Scanner",
   "itemGroup.factori20": "Factori20",
   "tooltip.f20.energyStored": "%d/%d FE",
   "txt.f20.chunkinfo.location": "Location: %d %d %d",
+  "txt.f20.no_ores_available": "No ores in this chunk",
+  "txt.f20.ores_available": "%d: %d available",
   "txt.f20.scanner.on_cooldown": "Scanner is for %ds on cooldown",
   "txt.f20.visualizer_amt": "Ore: %d/%d",
   "txt.f20.you_are_here": "You are here!"

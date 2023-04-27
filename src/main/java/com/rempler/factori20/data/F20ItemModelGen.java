@@ -5,6 +5,7 @@ import com.rempler.factori20.common.item.DrillHeadItem;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -20,8 +21,8 @@ public class F20ItemModelGen extends ItemModelProvider {
     protected void registerModels() {
         for (RegistryObject<Item> item : F20Items.ITEMS.getEntries()) {
             if (item.get() instanceof DrillHeadItem) {
-                drillHead(item);
-            } else {
+                drillHead((DrillHeadItem) item.get());
+            } else if (!(item.get() instanceof BlockItem)){
                 simpleItem(item);
             }
         }
@@ -39,8 +40,8 @@ public class F20ItemModelGen extends ItemModelProvider {
                 new ResourceLocation(F20Constants.MODID, "item/" + item.getId().getPath()));
     }
 
-    private ItemModelBuilder drillHead(RegistryObject<Item> item) {
-        return withExistingParent(item.getId().getPath(),
+    private ItemModelBuilder drillHead(DrillHeadItem item) {
+        return withExistingParent(item.toString(),
                 new ResourceLocation(F20Constants.MODID, "item/drill_head"));
     }
 }

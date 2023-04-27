@@ -5,10 +5,13 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraftforge.event.level.ChunkDataEvent;
+import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -25,7 +28,18 @@ public class ChunkResourceGenerator {
 
         if (data != null) {
             event.getData().put(CHUNK_RESOURCE_DATA_KEY, data.serializeNBT());
+        } else {
+            LevelAccessor level = chunk.getWorldForge();
+            if (level != null && !level.isClientSide()) {
+                data = generateChunkResourceData(new Random());
+                chunkResourceDataMap.put(chunkPos, data);
+            }
         }
+    }
+
+    @SubscribeEvent
+    public static void onServerClose(ServerStoppedEvent event) {
+        chunkResourceDataMap.clear();
     }
 
     @SubscribeEvent
@@ -38,8 +52,8 @@ public class ChunkResourceGenerator {
             data.deserializeNBT(event.getData().getCompound(CHUNK_RESOURCE_DATA_KEY));
             chunkResourceDataMap.put(chunkPos, data);
         } else {
-            LevelAccessor world = chunk.getWorldForge();
-            if (world != null && !world.isClientSide()) {
+            LevelAccessor level = chunk.getWorldForge();
+            if (level != null && !level.isClientSide()) {
                 ChunkResourceData data = generateChunkResourceData(new Random());
                 chunkResourceDataMap.put(chunkPos, data);
             }
@@ -52,9 +66,21 @@ public class ChunkResourceGenerator {
 
     private static ChunkResourceData generateChunkResourceData(Random random) {
         ChunkResourceData data = new ChunkResourceData();
-        for (ResourceType resourceType : ResourceType.values()) {
-            int amount = random.nextInt(resourceType.getMaxAmount() - resourceType.getMinAmount() + 1) + resourceType.getMinAmount();
-            data.setResourceAmount(resourceType, amount);
+        List<ResourceType> lst = new ArrayList<>();
+        ResourceType[] resourceTypes = ResourceType.values();
+        ResourceType firstResourceType = resourceTypes[random.nextInt(resourceTypes.length)];
+        lst.add(firstResourceType);
+        ResourceType secondResourceType;
+        do {
+            secondResourceType = resourceTypes[random.nextInt(resourceTypes.length)];
+        } while (firstResourceType == secondResourceType);
+        lst.add(secondResourceType);
+
+        for (ResourceType resourceType : lst) {
+            if (new Random().nextInt(0, 100) > 20) {
+                int amount = random.nextInt(resourceType.getMaxAmount() - resourceType.getMinAmount() + 1) + resourceType.getMinAmount();
+                data.setResourceAmount(resourceType, amount);
+            }
         }
         return data;
     }

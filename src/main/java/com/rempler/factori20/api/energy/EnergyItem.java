@@ -14,12 +14,12 @@ public final class EnergyItem extends AbstractEnergyStorage implements IF20Energ
         this.stack = stack;
     }
 
-    protected void writeEnergy() {
+    public void writeEnergy() {
         CompoundTag nbt = stack.getOrCreateTag();
         nbt.putInt(F20Constants.ENERGY, getEnergyStoredCache());
     }
 
-    protected void updateEnergy() {
+    public void updateEnergy() {
         CompoundTag nbt = stack.getOrCreateTag();
         if (nbt.contains(F20Constants.ENERGY))
             setEnergy(nbt.getInt(F20Constants.ENERGY));

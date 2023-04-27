@@ -21,6 +21,8 @@ build
 eclipse
 run
 runserver
+test
 
 # Files from Forge MDK
 forge*changelog.txt
+.cache

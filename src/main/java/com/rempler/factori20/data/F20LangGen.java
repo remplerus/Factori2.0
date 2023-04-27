@@ -23,6 +23,9 @@ public class F20LangGen extends LanguageProvider {
         add("txt.f20.chunkinfo.location", "Location: %d %d %d");
         add("txt.f20.you_are_here", "You are here!");
         add("txt.f20.visualizer_amt", "Ore: %d/%d");
+        add("txt.f20.ores_available", "%d: %d available");
+        add("txt.f20.no_ores_available", "No ores in this chunk");
+        add("f20.container.drill", "");
         add("itemGroup."+F20Constants.MODID, "Factori20");
     }
 }
