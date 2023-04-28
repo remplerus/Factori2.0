@@ -1,33 +1,22 @@
 package com.rempler.factori20.common.abstractions;
 
 import com.rempler.factori20.common.item.DrillHeadItem;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class BaseDrillContainerMenu extends AbstractContainerMenu {
-    private final BaseDrillBlockEntity drillBlockEntity;
-    private final ContainerData data;
+public abstract class BaseDrillContainerMenu extends AbstractContainerMenu {
 
-    public BaseDrillContainerMenu(int id, Inventory playerInventory, FriendlyByteBuf buf, MenuType<?> menuType) {
-        this(menuType, id, playerInventory, (BaseDrillBlockEntity) playerInventory.player.level.getBlockEntity(buf.readBlockPos()), new ItemStackHandler(1), new ItemStackHandler(9));
-    }
-
-    public BaseDrillContainerMenu(MenuType<?> menuType, int id, Inventory playerInventory, BaseDrillBlockEntity drillBlockEntity, ItemStackHandler inputHandler, ItemStackHandler outputHandler) {
+    public BaseDrillContainerMenu(MenuType<?> menuType, int id, Inventory playerInventory, ItemStackHandler inputHandler, ItemStackHandler outputHandler) {
         super(menuType, id);
-        this.drillBlockEntity = drillBlockEntity;
-        this.data = new SimpleContainerData(4);
 
-        addSlot(new SlotItemHandler(inputHandler, 0, 134, 35) {
+        addSlot(new SlotItemHandler(inputHandler, 0, 135, 35) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return stack.getItem() instanceof DrillHeadItem;

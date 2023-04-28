@@ -10,10 +10,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 
-public abstract class AbstractDrillScreen extends AbstractContainerScreen<BaseDrillContainerMenu> {
+public abstract class AbstractDrillScreen<T extends BaseDrillContainerMenu> extends AbstractContainerScreen<T> {
     protected static ResourceLocation BACKGROUND_TEXTURE;
 
-    public AbstractDrillScreen(BaseDrillContainerMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
+    public AbstractDrillScreen(T pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
         this.imageWidth = 176;
         this.imageHeight = 166;

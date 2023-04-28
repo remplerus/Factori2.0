@@ -1,7 +1,6 @@
 package com.rempler.factori20.common.blockentity;
 
 import com.rempler.factori20.common.abstractions.BaseDrillBlockEntity;
-import com.rempler.factori20.common.abstractions.BaseDrillContainerMenu;
 import com.rempler.factori20.common.init.F20BEs;
 import com.rempler.factori20.common.menu.BurnerDrillContainerMenu;
 import net.minecraft.core.BlockPos;
@@ -15,7 +14,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class BurnerDrillBlockEntity extends BaseDrillBlockEntity {
-    private final ItemStackHandler fuelHandler = new ItemStackHandler(1) {
+    public static final ItemStackHandler fuelHandler = new ItemStackHandler(1) {
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return ForgeHooks.getBurnTime(stack, null) > 0;
@@ -71,5 +70,13 @@ public class BurnerDrillBlockEntity extends BaseDrillBlockEntity {
         super.saveAdditional(pTag);
         pTag.putInt("burnTime", burnTime);
         pTag.putInt("itemBurnTime", itemBurnTime);
+    }
+
+    public int getBurnTime() {
+        return burnTime;
+    }
+
+    public int getMaxBurnTime() {
+        return itemBurnTime;
     }
 }
