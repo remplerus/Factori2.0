@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "D": {
+      "item": "factori20:diamond_drill_head"
+    },
+    "I": {
+      "tag": "forge:storage_blocks/emerald"
+    }
+  },
+  "pattern": [
+    "III",
+    "IDI",
+    "III"
+  ],
+  "result": {
+    "item": "factori20:emerald_drill_head"
+  }
+}

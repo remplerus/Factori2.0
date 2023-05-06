@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "tag": "forge:storage_blocks/copper"
+    },
+    "I": {
+      "tag": "forge:storage_blocks/iron"
+    },
+    "R": {
+      "tag": "forge:storage_blocks/redstone"
+    },
+    "c": {
+      "tag": "forge:storage_blocks/coal"
+    },
+    "r": {
+      "tag": "forge:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "CrC",
+    "rcr",
+    "IRI"
+  ],
+  "result": {
+    "item": "factori20:electric_drill_block"
+  }
+}

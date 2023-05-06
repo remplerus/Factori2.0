@@ -1,7 +1,10 @@
 package com.rempler.factori20.common.block;
 
+import com.rempler.factori20.api.helpers.ExceptionHelper;
 import com.rempler.factori20.common.abstractions.AbstractDrillBlock;
 import com.rempler.factori20.common.blockentity.BurnerDrillBlockEntity;
+import com.rempler.factori20.common.init.F20BEs;
+import com.rempler.factori20.common.menu.BurnerDrillMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -30,14 +33,7 @@ public class BurnerDrillBlock extends AbstractDrillBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if (!pLevel.isClientSide) {
-            return ((pLevel1, pPos, pState1, pBlockEntity) -> {
-                if (pBlockEntity instanceof BurnerDrillBlockEntity be) {
-                    be.tickServer();
-                }
-            });
-        }
-        return null;
+        return createTickerHelper(pBlockEntityType, F20BEs.BURNER_DRILL.get(), BurnerDrillBlockEntity::tick);
     }
 
     @Override
@@ -45,7 +41,9 @@ public class BurnerDrillBlock extends AbstractDrillBlock {
         if (!pLevel.isClientSide) {
             BlockEntity eb = pLevel.getBlockEntity(pPos);
             if (eb instanceof BurnerDrillBlockEntity dbe) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer, dbe, pPos);
+                NetworkHooks.openScreen((ServerPlayer) pPlayer, BurnerDrillMenu.getServerMenu(dbe), pPos);
+            } else {
+                new ExceptionHelper().illegalException("Our Container provider is missing!");
             }
         }
         return InteractionResult.SUCCESS;

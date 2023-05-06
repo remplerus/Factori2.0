@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "tag": "forge:storage_blocks/coal"
+    },
+    "c": {
+      "item": "minecraft:charcoal"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CcC",
+    "CCC"
+  ],
+  "result": {
+    "item": "factori20:burner_drill_block"
+  }
+}

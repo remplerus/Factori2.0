@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "D": {
+      "item": "factori20:iron_drill_head"
+    },
+    "I": {
+      "tag": "forge:storage_blocks/gold"
+    }
+  },
+  "pattern": [
+    "III",
+    "IDI",
+    "III"
+  ],
+  "result": {
+    "item": "factori20:gold_drill_head"
+  }
+}

@@ -54,7 +54,8 @@ public abstract class AbstractEnergyStorage implements IEnergyStorage {
             return 0;
         int energyExtracted = evaluateEnergyExtracted(maxExtract, simulate);
         if (! simulate) {
-            setEnergy(getEnergyStored() - energyExtracted);
+            int energyStored = getEnergyStored();
+            setEnergy(energyStored - energyExtracted);
             writeEnergy();
         }
         return energyExtracted;

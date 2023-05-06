@@ -19,5 +19,7 @@ public class F20DataGen {
         gen.addProvider(event.includeClient(), new F20BlockStateGen(gen, fileHelper));
         gen.addProvider(event.includeClient(), new F20ItemModelGen(gen, fileHelper));
         gen.addProvider(event.includeClient(), new F20LangGen(gen, "en_us"));
+
+        gen.addProvider(event.includeServer(), new F20RecipeGen(gen));
     }
 }

@@ -44,4 +44,9 @@ public abstract class AbstractDrillScreen<T extends BaseDrillContainerMenu> exte
             this.renderTooltip(pPoseStack, slotUnderMouse.getItem(), pX, pY);
         }
     }
+
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
 }
