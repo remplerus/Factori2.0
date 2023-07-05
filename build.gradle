@@ -13,7 +13,7 @@ archivesBaseName = 'factori20'
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel: 'parchment', version: '1.19.3-2023.03.12-1.19.2'
+    mappings channel: 'parchment', version: '2023.07.02-1.20.1'
 
     runs {
         client {
@@ -85,10 +85,10 @@ configurations.all {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.2-43.2.0'
+    minecraft 'net.minecraftforge:forge:1.20.1-47.0.45'
     //compileOnly fg.deobf(group: 'info.journeymap', name: 'journeymap-api', version: jm_api_version, changing: true)
     //runtimeOnly fg.deobf("curse.maven:journeymap-32274:${jm_version}")
-    runtimeOnly fg.deobf("curse.maven:spark-361579:4505309")
+    //runtimeOnly fg.deobf("curse.maven:spark-361579:4505309")
 }
 
 jar {

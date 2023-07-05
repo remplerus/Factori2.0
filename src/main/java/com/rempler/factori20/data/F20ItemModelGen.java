@@ -4,6 +4,7 @@ import com.rempler.factori20.common.init.F20Items;
 import com.rempler.factori20.common.item.DrillHeadItem;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -13,7 +14,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 
 public class F20ItemModelGen extends ItemModelProvider {
-    public F20ItemModelGen(DataGenerator output, ExistingFileHelper existingFileHelper) {
+    public F20ItemModelGen(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, F20Constants.MODID, existingFileHelper);
     }
 

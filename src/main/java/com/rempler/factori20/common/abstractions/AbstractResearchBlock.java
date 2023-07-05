@@ -7,8 +7,8 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public abstract class AbstractDrillBlock extends BaseEntityBlock {
-    public AbstractDrillBlock(Properties pProperties) {
+public abstract class AbstractResearchBlock extends BaseEntityBlock {
+    public AbstractResearchBlock(Properties pProperties) {
         super(pProperties);
     }
 
@@ -21,7 +21,7 @@ public abstract class AbstractDrillBlock extends BaseEntityBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof BaseDrillBlockEntity bde) {
+            if (blockEntity instanceof BaseResearchBlockEntity bde) {
                 bde.drops();
             }
         }

@@ -3,7 +3,7 @@ package com.rempler.factori20.data;
 import com.rempler.factori20.common.init.F20Items;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -17,12 +17,12 @@ import net.minecraftforge.common.Tags;
 import java.util.function.Consumer;
 
 public class F20RecipeGen extends RecipeProvider {
-    public F20RecipeGen(DataGenerator generator) {
+    public F20RecipeGen(PackOutput generator) {
         super(generator);
     }
 
     @Override
-    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         createDrillHeads(consumer);
         createDrills(consumer);
         ShapedRecipeBuilder.shaped(F20Items.SCANNER.get())
