@@ -1,6 +1,7 @@
 package com.rempler.factori20.api.helpers.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -35,11 +36,10 @@ public class EnergyInfoArea extends InfoAreaHelper {
     }
 
     @Override
-    public void draw(PoseStack transform) {
+    public void draw(GuiGraphics transform) {
         final int height = area.getHeight();
         int stored = (int)(height*(energy.getEnergyStored()/(float)energy.getMaxEnergyStored()));
-        fillGradient(
-                transform,
+        transform.fillGradient(
                 area.getX(), area.getY()+(height-stored),
                 area.getX() + area.getWidth(), area.getY() +area.getHeight(),
                 0xffb51500, 0xff600b00

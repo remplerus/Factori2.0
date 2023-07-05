@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.rempler.factori20.client.abstractions.AbstractResearchScreen;
 import com.rempler.factori20.common.menu.BurnerResearchMenu;
 import com.rempler.factori20.utils.F20Constants;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,10 +18,10 @@ public class BurnerResearchScreen extends AbstractResearchScreen<BurnerResearchM
     }
 
     @Override
-    protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pMouseX, int pMouseY) {
+    protected void renderBg(GuiGraphics pPoseStack, float pPartialTick, int pMouseX, int pMouseY) {
         super.renderBg(pPoseStack, pPartialTick, pMouseX, pMouseY);
         int flameHeight = bMenu.getFlameScaled();
-        this.blit(pPoseStack, leftPos + 26, topPos + 28 + 14 - flameHeight, 176, 13 - flameHeight, 14, flameHeight + 1);
+        pPoseStack.blit(BACKGROUND_TEXTURE, leftPos + 26, topPos + 28 + 14 - flameHeight, 176, 13 - flameHeight, 14, flameHeight + 1);
     }
 
     //@Override

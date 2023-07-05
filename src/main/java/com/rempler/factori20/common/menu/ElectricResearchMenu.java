@@ -17,14 +17,14 @@ public class ElectricResearchMenu extends BaseResearchContainerMenu {
     private final Level level;
     private final ContainerData data;
     public ElectricResearchMenu(int id, Inventory playerInventory, FriendlyByteBuf buf) {
-        this(id, playerInventory, (ElectricResearchBlockEntity) playerInventory.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2));
+        this(id, playerInventory, (ElectricResearchBlockEntity) playerInventory.player.level().getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2));
     }
 
     public ElectricResearchMenu(int id, Inventory playerInventory, ElectricResearchBlockEntity drillBlockEntity, ContainerData data) {
         super(F20Menus.ELECTRIC_RESEARCH_CONTAINER.get(), id, playerInventory, drillBlockEntity);
         checkContainerSize(playerInventory, 10);
         ebe = drillBlockEntity;
-        this.level = playerInventory.player.level;
+        this.level = playerInventory.player.level();
         this.data = data;
     }
 

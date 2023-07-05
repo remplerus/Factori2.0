@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class F20Items {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, F20Constants.MODID);
-    private static final Item.Properties TAB = new Item.Properties().tab(F20Constants.F20_TAB);
+    private static final Item.Properties TAB = new Item.Properties();
 
     public static final RegistryObject<DrillHeadItem> IRON_DRILL_HEAD = ITEMS.register("iron_drill_head",
             () -> new DrillHeadItem(TAB,1));

@@ -6,6 +6,7 @@ import com.rempler.factori20.api.helpers.renderer.EnergyInfoArea;
 import com.rempler.factori20.client.abstractions.AbstractDrillScreen;
 import com.rempler.factori20.common.menu.ElectricDrillMenu;
 import com.rempler.factori20.utils.F20Constants;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -26,30 +27,30 @@ public class ElectricDrillScreen extends AbstractDrillScreen<ElectricDrillMenu> 
     }
 
     @Override
-    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void render(GuiGraphics pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         this.renderBackground(pPoseStack);
         super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
         this.renderTooltip(pPoseStack, pMouseX, pMouseY);
     }
 
     @Override
-    protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pMouseX, int pMouseY) {
+    protected void renderBg(GuiGraphics pPoseStack, float pPartialTick, int pMouseX, int pMouseY) {
         super.renderBg(pPoseStack, pPartialTick, pMouseX, pMouseY);
         assignEnergyInfoArea();
         infoArea.draw(pPoseStack);
     }
 
     @Override
-    protected void renderLabels(PoseStack pPoseStack, int pMouseX, int pMouseY) {
+    protected void renderLabels(GuiGraphics pPoseStack, int pMouseX, int pMouseY) {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
         renderEnergyTooltips(pPoseStack, pMouseX, pMouseY, x, y);
     }
 
-    private void renderEnergyTooltips(PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
+    private void renderEnergyTooltips(GuiGraphics pPoseStack, int pMouseX, int pMouseY, int x, int y) {
         if (mouseIsAboveArea(pMouseX, pMouseY, x, y, 14, 14, 4, 62)) {
-            renderTooltip(pPoseStack, infoArea.getTooltips(), Optional.empty(), pMouseX - x, pMouseY - y);
+            renderTooltip(pPoseStack, pMouseX - x, pMouseY - y);
         }
     }
 

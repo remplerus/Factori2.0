@@ -5,6 +5,7 @@ import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -17,6 +18,7 @@ import net.minecraftforge.common.Tags;
 import java.util.function.Consumer;
 
 public class F20RecipeGen extends RecipeProvider {
+    private final RecipeCategory ignored = RecipeCategory.MISC;
     public F20RecipeGen(PackOutput generator) {
         super(generator);
     }
@@ -25,7 +27,7 @@ public class F20RecipeGen extends RecipeProvider {
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         createDrillHeads(consumer);
         createDrills(consumer);
-        ShapedRecipeBuilder.shaped(F20Items.SCANNER.get())
+        ShapedRecipeBuilder.shaped(ignored, F20Items.SCANNER.get())
                 .pattern("gg ")
                 .pattern("crc")
                 .pattern(" ii")
@@ -38,7 +40,7 @@ public class F20RecipeGen extends RecipeProvider {
     }
 
     private void createDrills(Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(F20Items.BURNER_DRILL.get())
+        ShapedRecipeBuilder.shaped(ignored, F20Items.BURNER_DRILL.get())
                 .pattern("CCC")
                 .pattern("CcC")
                 .pattern("CCC")
@@ -46,7 +48,7 @@ public class F20RecipeGen extends RecipeProvider {
                 .define('c', Items.CHARCOAL)
                 .unlockedBy("charcoal", InventoryChangeTrigger.TriggerInstance.hasItems(Items.CHARCOAL))
                 .save(consumer, new ResourceLocation(F20Constants.MODID, "drills/burner_drill"));
-        ShapedRecipeBuilder.shaped(F20Items.ELECTRIC_DRILL.get())
+        ShapedRecipeBuilder.shaped(ignored, F20Items.ELECTRIC_DRILL.get())
                 .pattern("CrC")
                 .pattern("rcr")
                 .pattern("IRI")
@@ -67,7 +69,7 @@ public class F20RecipeGen extends RecipeProvider {
     }
 
     private void createDrillHeadsRecipe(Consumer<FinishedRecipe> consumer, ItemLike output, TagKey<Item> input1, ItemLike input2) {
-        ShapedRecipeBuilder.shaped(output)
+        ShapedRecipeBuilder.shaped(ignored, output)
                 .pattern("III")
                 .pattern("IDI")
                 .pattern("III")

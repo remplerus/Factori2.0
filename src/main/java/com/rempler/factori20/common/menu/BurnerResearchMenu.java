@@ -23,14 +23,14 @@ public class BurnerResearchMenu extends BaseResearchContainerMenu {
     private final ContainerData data;
 
     public BurnerResearchMenu(int id, Inventory playerInventory, FriendlyByteBuf buf) {
-        this(id, playerInventory, (BurnerResearchBlockEntity) playerInventory.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2), new ItemStackHandler(1));
+        this(id, playerInventory, (BurnerResearchBlockEntity) playerInventory.player.level().getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2), new ItemStackHandler(1));
     }
 
     public BurnerResearchMenu(int id, Inventory playerInventory, BurnerResearchBlockEntity drillBlockEntity, ContainerData data, ItemStackHandler fuelHandler) {
         super(F20Menus.BURNER_RESEARCH_CONTAINER.get(), id, playerInventory, drillBlockEntity);
         checkContainerSize(playerInventory, 10);
         this.dbe = drillBlockEntity;
-        this.level = playerInventory.player.level;
+        this.level = playerInventory.player.level();
         this.data = data;
 
         addSlot(new SlotItemHandler(fuelHandler, 0, 25, 45));
@@ -45,7 +45,7 @@ public class BurnerResearchMenu extends BaseResearchContainerMenu {
     }
 
     public static BurnerResearchMenu getClientMenu(int id, Inventory playerInventory, FriendlyByteBuf buf) {
-        return new BurnerResearchMenu(id, playerInventory, (BurnerResearchBlockEntity) playerInventory.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(4), new ItemStackHandler(1));
+        return new BurnerResearchMenu(id, playerInventory, (BurnerResearchBlockEntity) playerInventory.player.level().getBlockEntity(buf.readBlockPos()), new SimpleContainerData(4), new ItemStackHandler(1));
     }
 
     public int getFlameScaled() {
