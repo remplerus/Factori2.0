@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "C": {
       "tag": "forge:storage_blocks/copper"
@@ -24,5 +25,6 @@
   ],
   "result": {
     "item": "factori20:electric_drill_block"
-  }
+  },
+  "show_notification": true
 }

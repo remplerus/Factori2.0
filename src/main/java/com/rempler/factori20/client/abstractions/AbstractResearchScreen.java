@@ -1,7 +1,7 @@
 package com.rempler.factori20.client.abstractions;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.rempler.factori20.common.abstractions.BaseResearchContainerMenu;
+import com.rempler.factori20.common.abstractions.bases.BaseResearchContainerMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -42,7 +42,7 @@ public abstract class AbstractResearchScreen<T extends BaseResearchContainerMenu
         super.renderTooltip(pPoseStack, pX, pY);
         Slot slotUnderMouse = this.getSlotUnderMouse();
         if (slotUnderMouse != null && slotUnderMouse.hasItem()) {
-            this.renderTooltip(pPoseStack, pX, pY);
+            //this.renderTooltip(pPoseStack, pX, pY);
         }
     }
 

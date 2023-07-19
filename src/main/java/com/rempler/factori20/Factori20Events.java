@@ -39,11 +39,6 @@ public class Factori20Events {
         event.enqueueWork(MessagesHelper::register);
     }
 
-    //@SubscribeEvent
-    //public static void createCreativeTab(CreativeModeTabEvent.Register event) {
-    //    F20Constants.F20_TAB = event.registerCreativeModeTab(new ResourceLocation(F20Constants.MODID, "factori20_tab"),
-    //            builder -> builder.icon(() -> F20Items.SCANNER.get().getDefaultInstance()).title(Component.literal("Factori20 Tab")).build());
-    //}
     @Mod.EventBusSubscriber
     public static class SpecialEvents {
         @SubscribeEvent

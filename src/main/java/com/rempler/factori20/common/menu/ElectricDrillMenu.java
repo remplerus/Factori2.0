@@ -1,6 +1,6 @@
 package com.rempler.factori20.common.menu;
 
-import com.rempler.factori20.common.abstractions.BaseDrillContainerMenu;
+import com.rempler.factori20.common.abstractions.bases.BaseDrillContainerMenu;
 import com.rempler.factori20.common.blockentity.ElectricDrillBlockEntity;
 import com.rempler.factori20.common.init.F20Blocks;
 import com.rempler.factori20.common.init.F20Menus;

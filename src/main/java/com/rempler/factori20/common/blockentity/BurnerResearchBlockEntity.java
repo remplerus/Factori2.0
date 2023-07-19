@@ -1,6 +1,6 @@
 package com.rempler.factori20.common.blockentity;
 
-import com.rempler.factori20.common.abstractions.BaseResearchBlockEntity;
+import com.rempler.factori20.common.abstractions.bases.BaseResearchBlockEntity;
 import com.rempler.factori20.common.init.F20BEs;
 import com.rempler.factori20.common.menu.BurnerResearchMenu;
 import net.minecraft.core.BlockPos;
@@ -82,13 +82,13 @@ public class BurnerResearchBlockEntity extends BaseResearchBlockEntity {
             }
         }
 
-        if (pEntity.burnTime > 0 && canInsert(pEntity) && shouldDrill(level, pos)) {
-            pEntity.burnTime--;
-            tickServer(level, pos, state, pEntity);
-            currentBurnTime = pEntity.burnTime;
-        } else {
-            setChanged(level, pos, state);
-        }
+        //if (pEntity.burnTime > 0 && canInsert(pEntity)) {
+        //    pEntity.burnTime--;
+        //    tickServer(level, pos, state, pEntity);
+        //    currentBurnTime = pEntity.burnTime;
+        //} else {
+        //    setChanged(level, pos, state);
+        //}
     }
 
     @Override
@@ -120,7 +120,7 @@ public class BurnerResearchBlockEntity extends BaseResearchBlockEntity {
 
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pInventory, Player player) {
-        return new BurnerResearchMenu(pContainerId, pInventory, this, this.data, this.fuelHandler);
+        return new BurnerResearchMenu(pContainerId, pInventory, this, this.data, this.fuelHandler, this.outputHandler);
     }
 
     @Override

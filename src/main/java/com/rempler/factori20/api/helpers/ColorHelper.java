@@ -1,19 +1,27 @@
 package com.rempler.factori20.api.helpers;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.awt.*;
 
 @OnlyIn(Dist.CLIENT)
-public class ColorHelper {
+public class ColorHelper implements ItemColor {
 
     public static int getColorFrom(ResourceLocation location) {
+        if (Minecraft.getInstance().getTextureManager() == null) {
+            return 0;
+        }
         AbstractTexture texture = Minecraft.getInstance().getTextureManager().getTexture(InventoryMenu.BLOCK_ATLAS);
         if (texture instanceof TextureAtlas && !(location.getPath().equals("grass_block"))) {
             return getColorFrom(((TextureAtlas) texture).getSprite(location));
@@ -44,5 +52,16 @@ public class ColorHelper {
         if (total > 0)
             return FastColor.ARGB32.color(255, (int) (red / total), (int) (green / total), (int) (blue / total));
         return -1;
+    }
+
+    @Override
+    public int getColor(ItemStack pStack, int pTintIndex) {
+        return switch (pTintIndex) {
+            case 0 -> Color.WHITE.getRGB();
+            case 1 -> getColorFrom(ForgeRegistries.ITEMS.getKey(pStack.getItem()));
+            default ->
+                // oops! should never get here.
+                    Color.BLACK.getRGB();
+        };
     }
 }

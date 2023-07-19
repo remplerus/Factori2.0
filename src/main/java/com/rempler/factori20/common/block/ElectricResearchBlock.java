@@ -1,9 +1,10 @@
 package com.rempler.factori20.common.block;
 
 import com.rempler.factori20.api.helpers.ExceptionHelper;
-import com.rempler.factori20.common.abstractions.AbstractResearchBlock;
+import com.rempler.factori20.common.abstractions.bases.BaseResearchBlock;
 import com.rempler.factori20.common.blockentity.ElectricResearchBlockEntity;
 import com.rempler.factori20.common.init.F20BEs;
+import com.rempler.factori20.common.menu.ElectricResearchMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -18,7 +19,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-public class ElectricResearchBlock extends AbstractResearchBlock {
+public class ElectricResearchBlock extends BaseResearchBlock {
     public ElectricResearchBlock(Properties pProperties) {
         super(pProperties);
     }
@@ -28,7 +29,7 @@ public class ElectricResearchBlock extends AbstractResearchBlock {
         if (!pLevel.isClientSide) {
             BlockEntity eb = pLevel.getBlockEntity(pPos);
             if (eb instanceof ElectricResearchBlockEntity dbe) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer, dbe, pPos);
+                NetworkHooks.openScreen((ServerPlayer) pPlayer, ElectricResearchMenu.getServerMenu(dbe), pPos);
             } else {
                 new ExceptionHelper().illegalException("Our Container provider is missing!");
             }

@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "factori20:research/reverse_3_8"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "research_3": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "factori20:research_3_8"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "research_3",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "factori20:research/reverse_3_8"
+    ]
+  },
+  "sends_telemetry_event": false
+}

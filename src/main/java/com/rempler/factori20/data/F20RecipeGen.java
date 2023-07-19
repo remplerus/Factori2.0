@@ -1,19 +1,18 @@
 package com.rempler.factori20.data;
 
 import com.rempler.factori20.common.init.F20Items;
+import com.rempler.factori20.common.item.ResearchItem;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Consumer;
 
@@ -27,6 +26,7 @@ public class F20RecipeGen extends RecipeProvider {
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         createDrillHeads(consumer);
         createDrills(consumer);
+        createResearchRecipe(consumer);
         ShapedRecipeBuilder.shaped(ignored, F20Items.SCANNER.get())
                 .pattern("gg ")
                 .pattern("crc")
@@ -77,5 +77,41 @@ public class F20RecipeGen extends RecipeProvider {
                 .define('D', input2)
                 .unlockedBy("drill_head", InventoryChangeTrigger.TriggerInstance.hasItems(input2))
                 .save(consumer, new ResourceLocation(F20Constants.MODID, "drill_heads/"+output));
+    }
+
+    private void createResearchRecipe(Consumer<FinishedRecipe> consumer) {
+        for (RegistryObject<Item> item : F20Items.ITEMS.getEntries()) {
+            if (item.get() instanceof ResearchItem ri && ri.getTemp() == 8) {
+                createSimpleResearchRecipe(consumer, ri);
+            }
+        }
+    }
+
+    private void createSimpleResearchRecipe(Consumer<FinishedRecipe> consumer, ResearchItem ri) {
+        ShapedRecipeBuilder.shaped(ignored, ri.getItem(ri.getTemp(), ri.getTier()))
+                .pattern("xxx")
+                .pattern("x x")
+                .pattern("xxx")
+                .define('x', ri.getItem(ri.getTemp()/8, ri.getTier()))
+                .unlockedBy("research_"+ri.getTier(), InventoryChangeTrigger.TriggerInstance.hasItems(ri))
+                .save(consumer, new ResourceLocation(F20Constants.MODID, "research/"+ri.getTier()+"_"+ri.getTemp()));
+
+        ShapelessRecipeBuilder.shapeless(ignored, ri.getItem(ri.getTemp()/8, ri.getTier()), 8)
+                .requires(ri.getItem(ri.getTemp(), ri.getTier()))
+                .unlockedBy("research_"+ri.getTier(), InventoryChangeTrigger.TriggerInstance.hasItems(ri))
+                .save(consumer, new ResourceLocation(F20Constants.MODID, "research/reverse_"+ri.getTier()+"_"+(ri.getTemp())));
+
+        ShapedRecipeBuilder.shaped(ignored, ri.getItem(ri.getTemp()*8, ri.getTier()))
+                .pattern("xxx")
+                .pattern("x x")
+                .pattern("xxx")
+                .define('x', ri.getItem(ri.getTemp(), ri.getTier()))
+                .unlockedBy("research_"+ri.getTier(), InventoryChangeTrigger.TriggerInstance.hasItems(ri))
+                .save(consumer, new ResourceLocation(F20Constants.MODID, "research/"+ri.getTier()+"_"+(ri.getTemp()*8)));
+
+        ShapelessRecipeBuilder.shapeless(ignored, ri.getItem(ri.getTemp(), ri.getTier()), 8)
+                .requires(ri.getItem(ri.getTemp()*8, ri.getTier()))
+                .unlockedBy("research_"+ri.getTier(), InventoryChangeTrigger.TriggerInstance.hasItems(ri))
+                .save(consumer, new ResourceLocation(F20Constants.MODID, "research/reverse_"+ri.getTier()+"_"+ri.getTemp()*8));
     }
 }

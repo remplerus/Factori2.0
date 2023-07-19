@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "factori20:research_4_64"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "item": "factori20:research_4_8"
+  }
+}

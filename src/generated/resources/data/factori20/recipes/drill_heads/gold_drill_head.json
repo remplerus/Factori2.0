@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "D": {
       "item": "factori20:iron_drill_head"
@@ -15,5 +16,6 @@
   ],
   "result": {
     "item": "factori20:gold_drill_head"
-  }
+  },
+  "show_notification": true
 }

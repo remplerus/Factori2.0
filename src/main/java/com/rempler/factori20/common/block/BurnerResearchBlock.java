@@ -1,7 +1,7 @@
 package com.rempler.factori20.common.block;
 
 import com.rempler.factori20.api.helpers.ExceptionHelper;
-import com.rempler.factori20.common.abstractions.AbstractResearchBlock;
+import com.rempler.factori20.common.abstractions.bases.BaseResearchBlock;
 import com.rempler.factori20.common.blockentity.BurnerResearchBlockEntity;
 import com.rempler.factori20.common.init.F20BEs;
 import com.rempler.factori20.common.menu.BurnerResearchMenu;
@@ -19,7 +19,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-public class BurnerResearchBlock extends AbstractResearchBlock {
+public class BurnerResearchBlock extends BaseResearchBlock {
     public BurnerResearchBlock(Properties pProperties) {
         super(pProperties);
     }

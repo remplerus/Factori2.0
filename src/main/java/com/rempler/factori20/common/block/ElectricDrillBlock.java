@@ -1,7 +1,7 @@
 package com.rempler.factori20.common.block;
 
 import com.rempler.factori20.api.helpers.ExceptionHelper;
-import com.rempler.factori20.common.abstractions.AbstractDrillBlock;
+import com.rempler.factori20.common.abstractions.bases.BaseDrillBlock;
 import com.rempler.factori20.common.blockentity.ElectricDrillBlockEntity;
 import com.rempler.factori20.common.init.F20BEs;
 import net.minecraft.core.BlockPos;
@@ -18,7 +18,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-public class ElectricDrillBlock extends AbstractDrillBlock {
+public class ElectricDrillBlock extends BaseDrillBlock {
     public ElectricDrillBlock(Properties pProperties) {
         super(pProperties);
     }

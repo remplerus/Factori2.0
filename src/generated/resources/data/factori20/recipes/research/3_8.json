@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "x": {
+      "item": "factori20:research_3_1"
+    }
+  },
+  "pattern": [
+    "xxx",
+    "x x",
+    "xxx"
+  ],
+  "result": {
+    "item": "factori20:research_3_8"
+  },
+  "show_notification": true
+}

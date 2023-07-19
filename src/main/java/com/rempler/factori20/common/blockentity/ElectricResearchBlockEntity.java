@@ -3,7 +3,7 @@ package com.rempler.factori20.common.blockentity;
 import com.rempler.factori20.api.energy.F20EnergyStorage;
 import com.rempler.factori20.api.helpers.MessagesHelper;
 import com.rempler.factori20.api.sync.EnergySyncS2CPacket;
-import com.rempler.factori20.common.abstractions.BaseResearchBlockEntity;
+import com.rempler.factori20.common.abstractions.bases.BaseResearchBlockEntity;
 import com.rempler.factori20.common.init.F20BEs;
 import com.rempler.factori20.common.menu.ElectricResearchMenu;
 import com.rempler.factori20.utils.F20Config;
@@ -42,7 +42,7 @@ public class ElectricResearchBlockEntity extends BaseResearchBlockEntity {
 
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pInventory, Player player) {
-        return new ElectricResearchMenu(pContainerId, pInventory, this, this.data);
+        return new ElectricResearchMenu(pContainerId, pInventory, this, this.data, this.outputHandler);
     }
 
     public IEnergyStorage getEnergyStorage() {
@@ -58,7 +58,7 @@ public class ElectricResearchBlockEntity extends BaseResearchBlockEntity {
     }
 
     private static boolean hasEnoughEnergy(ElectricResearchBlockEntity pEntity) {
-        return pEntity.energyStorage.getEnergyStored() >= ENERGY_REQ * getDrillSpeed(pEntity);
+        return pEntity.energyStorage.getEnergyStored() >= ENERGY_REQ;
     }
 
     @Override
@@ -81,6 +81,7 @@ public class ElectricResearchBlockEntity extends BaseResearchBlockEntity {
         super.onLoad();
         lazyItemHandler = LazyOptional.of(() -> itemHandler);
         lazyEnergyHandler = LazyOptional.of(() -> energyStorage);
+        lazyOutputHandler = LazyOptional.of(() -> outputHandler);
     }
 
     @Override
@@ -88,6 +89,7 @@ public class ElectricResearchBlockEntity extends BaseResearchBlockEntity {
         super.invalidateCaps();
         lazyItemHandler.invalidate();
         lazyEnergyHandler.invalidate();
+        lazyOutputHandler.invalidate();
     }
 
     @Override
@@ -108,14 +110,14 @@ public class ElectricResearchBlockEntity extends BaseResearchBlockEntity {
             return;
         }
 
-        if (hasEnoughEnergy(pEntity) && shouldDrill(level, pos) && canInsert(pEntity)) {
-            tickServer(level, pos, state, pEntity);
-            extractEnergy(pEntity);
-            setChanged(level, pos, state);
-        } else {
-            pEntity.resetProgress();
-            setChanged(level, pos, state);
-        }
+        //if (hasEnoughEnergy(pEntity) && shouldDrill(level, pos) && canInsert(pEntity)) {
+        //    tickServer(level, pos, state, pEntity);
+        //    extractEnergy(pEntity);
+        //    setChanged(level, pos, state);
+        //} else {
+        //    pEntity.resetProgress();
+        //    setChanged(level, pos, state);
+        //}
 
     }
 }

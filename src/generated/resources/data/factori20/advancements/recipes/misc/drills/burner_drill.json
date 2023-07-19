@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "charcoal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:charcoal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "factori20:drills/burner_drill"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "charcoal",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "factori20:drills/burner_drill"
+    ]
+  },
+  "sends_telemetry_event": false
+}
