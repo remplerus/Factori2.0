@@ -2,6 +2,8 @@ package com.rempler.factori20.data;
 
 import com.rempler.factori20.common.init.F20Items;
 import com.rempler.factori20.common.item.ResearchItem;
+import com.rempler.factori20.common.recipe.ResearchRecipe;
+import com.rempler.factori20.common.recipe.builder.ResearchRecipeBuilder;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.PackOutput;
@@ -10,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.RegistryObject;
@@ -27,6 +30,7 @@ public class F20RecipeGen extends RecipeProvider {
         createDrillHeads(consumer);
         createDrills(consumer);
         createResearchRecipe(consumer);
+        createResearcherRecipe(consumer);
         ShapedRecipeBuilder.shaped(ignored, F20Items.SCANNER.get())
                 .pattern("gg ")
                 .pattern("crc")
@@ -36,6 +40,51 @@ public class F20RecipeGen extends RecipeProvider {
                 .define('i', Tags.Items.INGOTS_IRON)
                 .define('r', Tags.Items.DUSTS_REDSTONE)
                 .unlockedBy("redstone", InventoryChangeTrigger.TriggerInstance.hasItems(Items.REDSTONE))
+                .save(consumer);
+    }
+
+    private void createResearcherRecipe(Consumer<FinishedRecipe> consumer) {
+        new ResearchRecipeBuilder(F20Items.RESEARCH_1.get())
+                .add(Ingredient.of(Items.IRON_INGOT))
+                .add(Ingredient.of(Items.GOLD_INGOT))
+                .add(Ingredient.of(Items.DIAMOND))
+                .time(2500)
+                .unlockedBy("iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
+                .save(consumer);
+        new ResearchRecipeBuilder(F20Items.RESEARCH_2.get())
+                .add(Ingredient.of(Items.EMERALD))
+                .add(Ingredient.of(Items.GOLD_INGOT))
+                .add(Ingredient.of(Items.DIAMOND))
+                .time(7500)
+                .unlockedBy("gold", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLD_INGOT))
+                .save(consumer);
+        new ResearchRecipeBuilder(F20Items.RESEARCH_3.get())
+                .add(Ingredient.of(Items.EMERALD))
+                .add(Ingredient.of(Items.NETHERITE_INGOT))
+                .add(Ingredient.of(Items.DIAMOND))
+                .time(15000)
+                .unlockedBy("diamond", InventoryChangeTrigger.TriggerInstance.hasItems(Items.DIAMOND))
+                .save(consumer);
+        new ResearchRecipeBuilder(F20Items.RESEARCH_4.get())
+                .add(Ingredient.of(Items.EMERALD))
+                .add(Ingredient.of(Items.NETHERITE_INGOT))
+                .add(Ingredient.of(Items.IRON_BLOCK))
+                .time(30000)
+                .unlockedBy("iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_BLOCK))
+                .save(consumer);
+        new ResearchRecipeBuilder(F20Items.RESEARCH_5.get())
+                .add(Ingredient.of(Items.IRON_BLOCK))
+                .add(Ingredient.of(Items.DIAMOND_BLOCK))
+                .add(Ingredient.of(Items.EMERALD_BLOCK))
+                .time(60000)
+                .unlockedBy("iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_BLOCK))
+                .save(consumer);
+        new ResearchRecipeBuilder(F20Items.RESEARCH_6.get())
+                .add(Ingredient.of(Items.DIAMOND_BLOCK))
+                .add(Ingredient.of(Items.EMERALD_BLOCK))
+                .add(Ingredient.of(Items.NETHERITE_BLOCK))
+                .time(120000)
+                .unlockedBy("netherite", InventoryChangeTrigger.TriggerInstance.hasItems(Items.NETHERITE_BLOCK))
                 .save(consumer);
     }
 

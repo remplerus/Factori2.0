@@ -1,11 +1,7 @@
 package com.rempler.factori20;
 
 import com.mojang.logging.LogUtils;
-import com.rempler.factori20.common.init.F20BEs;
-import com.rempler.factori20.common.init.F20Blocks;
-import com.rempler.factori20.common.init.F20CreativeTab;
-import com.rempler.factori20.common.init.F20Items;
-import com.rempler.factori20.common.init.F20Menus;
+import com.rempler.factori20.common.init.*;
 import com.rempler.factori20.utils.F20Config;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.world.item.Item;
@@ -32,6 +28,7 @@ public class Factori20 {
         F20BEs.register(bus);
         F20Menus.register(bus);
         F20CreativeTab.register(bus);
+        F20Recipes.register(bus);
         bus.addListener(this::addCreativeTab);
     }
 

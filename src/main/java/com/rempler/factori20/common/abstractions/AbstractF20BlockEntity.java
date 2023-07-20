@@ -67,11 +67,11 @@ public abstract class AbstractF20BlockEntity extends BlockEntity implements Menu
         return truege;
     }
 
-    private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack, int i) {
+    protected static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack, int i) {
         return inventory.getItem(i).getItem() == stack.getItem() || inventory.getItem(i).isEmpty();
     }
 
-    private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory, int i) {
+    protected static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory, int i) {
         return inventory.getItem(i).getMaxStackSize() > inventory.getItem(i).getCount();
     }
 

@@ -6,6 +6,7 @@ import com.rempler.factori20.common.menu.BurnerResearchMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -82,13 +83,19 @@ public class BurnerResearchBlockEntity extends BaseResearchBlockEntity {
             }
         }
 
-        //if (pEntity.burnTime > 0 && canInsert(pEntity)) {
-        //    pEntity.burnTime--;
-        //    tickServer(level, pos, state, pEntity);
-        //    currentBurnTime = pEntity.burnTime;
-        //} else {
-        //    setChanged(level, pos, state);
-        //}
+        SimpleContainer inventory = new SimpleContainer(pEntity.itemHandler.getSlots());
+        for (int i = 0; i < pEntity.itemHandler.getSlots(); i++) {
+            inventory.setItem(i, pEntity.itemHandler.getStackInSlot(i));
+        }
+
+        if (pEntity.burnTime > 0 && canInsert(pEntity) && pEntity.isRecipeThere(level, inventory)) {
+            pEntity.burnTime--;
+            tickServer(level, pEntity, inventory);
+            currentBurnTime = pEntity.burnTime;
+            setChanged(level, pos, state);
+        } else {
+            setChanged(level, pos, state);
+        }
     }
 
     @Override

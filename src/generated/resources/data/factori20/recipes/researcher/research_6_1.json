@@ -1,0 +1,18 @@
+{
+  "type": "factori20:research",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond_block"
+    },
+    {
+      "item": "minecraft:emerald_block"
+    },
+    {
+      "item": "minecraft:netherite_block"
+    }
+  ],
+  "output": {
+    "item": "factori20:research_6_1"
+  },
+  "researchTime": 120000
+}

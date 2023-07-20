@@ -8,10 +8,10 @@ public class DrillHeadItem extends Item {
     private final int tier;
     private final int color;
 
-    public DrillHeadItem(Properties properties, int tier, int color) {
+    public DrillHeadItem(Properties properties, int tier) {
         super(properties.stacksTo(1));
         this.tier = tier;
-        this.color = color;
+        this.color = 0;
     }
 
     public int getSpeed() {

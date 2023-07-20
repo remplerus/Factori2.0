@@ -10,6 +10,7 @@ import com.rempler.factori20.utils.F20Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -110,14 +111,17 @@ public class ElectricResearchBlockEntity extends BaseResearchBlockEntity {
             return;
         }
 
-        //if (hasEnoughEnergy(pEntity) && shouldDrill(level, pos) && canInsert(pEntity)) {
-        //    tickServer(level, pos, state, pEntity);
-        //    extractEnergy(pEntity);
-        //    setChanged(level, pos, state);
-        //} else {
-        //    pEntity.resetProgress();
-        //    setChanged(level, pos, state);
-        //}
+        SimpleContainer inventory = new SimpleContainer(pEntity.itemHandler.getSlots());
+        for (int i = 0; i < pEntity.itemHandler.getSlots(); i++) {
+            inventory.setItem(i, pEntity.itemHandler.getStackInSlot(i));
+        }
 
+        if (hasEnoughEnergy(pEntity) && canInsert(pEntity) && pEntity.isRecipeThere(level, inventory)) {
+            tickServer(level, pEntity, inventory);
+            extractEnergy(pEntity);
+            setChanged(level, pos, state);
+        } else {
+            setChanged(level, pos, state);
+        }
     }
 }

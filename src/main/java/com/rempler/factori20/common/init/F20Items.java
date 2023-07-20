@@ -19,13 +19,13 @@ public class F20Items {
     private static final Item.Properties TAB = new Item.Properties();
 
     public static final RegistryObject<DrillHeadItem> IRON_DRILL_HEAD = ITEMS.register("iron_drill_head",
-            () -> new DrillHeadItem(TAB,1, ColorHelper.getColorFrom(ForgeRegistries.ITEMS.getKey(Items.IRON_BLOCK))));
+            () -> new DrillHeadItem(TAB,1));
     public static final RegistryObject<DrillHeadItem> DIAMOND_DRILL_HEAD = ITEMS.register("diamond_drill_head",
-            () -> new DrillHeadItem(TAB,3, ColorHelper.getColorFrom(ForgeRegistries.ITEMS.getKey(Items.DIAMOND_BLOCK))));
+            () -> new DrillHeadItem(TAB,3));
     public static final RegistryObject<DrillHeadItem> EMERALD_DRILL_HEAD = ITEMS.register("emerald_drill_head",
-            () -> new DrillHeadItem(TAB,4, ColorHelper.getColorFrom(ForgeRegistries.ITEMS.getKey(Items.EMERALD_BLOCK))));
+            () -> new DrillHeadItem(TAB,4));
     public static final RegistryObject<DrillHeadItem> GOLD_DRILL_HEAD = ITEMS.register("gold_drill_head",
-            () -> new DrillHeadItem(TAB,2, ColorHelper.getColorFrom(ForgeRegistries.ITEMS.getKey(Items.GOLD_BLOCK))));
+            () -> new DrillHeadItem(TAB,2));
     public static final RegistryObject<ResearchItem> RESEARCH_1 = ITEMS.register("research_1_1",
             () -> new ResearchItem(TAB,1, 1));
     public static final RegistryObject<ResearchItem> RESEARCH_2 = ITEMS.register("research_2_1",

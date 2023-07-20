@@ -32,6 +32,7 @@ public class F20LangGen extends LanguageProvider {
         add("txt.f20.no_ores_available", "No ores in this chunk");
         add("f20.container.drill", "");
         add("f20.container.researcher", "");
+        add("f20.jei.research.title", "Researcher");
         add("itemGroup."+F20Constants.MODID, "Factori20");
     }
 }
