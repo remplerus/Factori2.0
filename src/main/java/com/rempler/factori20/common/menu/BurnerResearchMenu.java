@@ -13,38 +13,22 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class BurnerResearchMenu extends BaseResearchContainerMenu {
-    public final BurnerResearchBlockEntity ebe;
-    private final Level level;
-    private final ContainerData data;
 
     public BurnerResearchMenu(int id, Inventory playerInventory, FriendlyByteBuf buf) {
         this(id, playerInventory, (BurnerResearchBlockEntity) playerInventory.player.level().getBlockEntity(buf.readBlockPos()), new SimpleContainerData(3), new ItemStackHandler(1), new ItemStackHandler(1));
     }
 
     public BurnerResearchMenu(int id, Inventory playerInventory, BurnerResearchBlockEntity researchBlockEntity, ContainerData data, ItemStackHandler fuelHandler, ItemStackHandler outputHandler) {
-        super(F20Menus.BURNER_RESEARCH_CONTAINER.get(), id, playerInventory);
+        super(F20Menus.BURNER_RESEARCH_CONTAINER.get(), id, playerInventory, researchBlockEntity, outputHandler, data);
         checkContainerSize(playerInventory, 3);
-        this.ebe = researchBlockEntity;
-        this.level = playerInventory.player.level();
-        this.data = data;
 
         addSlot(new SlotItemHandler(fuelHandler, 0, 25, 45));
-        addSlot(new SlotItemHandler(outputHandler, 0, 135, 35));
 
-        this.ebe.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            for (int i = 0; i < handler.getSlots(); ++i) {
-                addSlot(new SlotItemHandler(handler, i, 62 + i * 18, 17 + 18));
-            }
-        });
-
-        addDataSlots(data);
-        addDataSlots(ebe.burnData);
+        addDataSlots(((BurnerResearchBlockEntity)ebe).burnData);
     }
 
     public static MenuProvider getServerMenu(BurnerResearchBlockEntity be) {
@@ -57,8 +41,8 @@ public class BurnerResearchMenu extends BaseResearchContainerMenu {
     }
 
     public int getFlameScaled() {
-        int totalTime = this.data.get(1);
-        int actualTime = this.data.get(0);
+        int totalTime = ((BurnerResearchBlockEntity)ebe).burnData.get(1);
+        int actualTime = ((BurnerResearchBlockEntity)ebe).burnData.get(0);
 
         return totalTime != 0 && actualTime != 0 ? actualTime*13/totalTime : 0;
     }

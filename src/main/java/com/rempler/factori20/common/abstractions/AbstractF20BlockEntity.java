@@ -48,12 +48,12 @@ public abstract class AbstractF20BlockEntity extends BlockEntity implements Menu
         saveAdditional(tag);
         return tag;
     }
-
+    
     protected static boolean canInsert(AbstractF20BlockEntity blockEntity) {
-        SimpleContainer inventory = new SimpleContainer(blockEntity.itemHandler.getSlots() - 1);
+        SimpleContainer inventory = new SimpleContainer(blockEntity.itemHandler.getSlots());
         boolean truege = true;
 
-        for (int i = 0; i < blockEntity.itemHandler.getSlots() - 1; i++) {
+        for (int i = 0; i < blockEntity.itemHandler.getSlots(); i++) {
             inventory.setItem(i, blockEntity.itemHandler.getStackInSlot(i));
             if (!canInsertAmountIntoOutputSlot(inventory, i) || !canInsertItemIntoOutputSlot(inventory, blockEntity.itemHandler.getStackInSlot(i), i)) {
                 truege = false;

@@ -31,7 +31,7 @@ public class ElectricResearchBlockEntity extends BaseResearchBlockEntity {
         }
     };
 
-    private static final int ENERGY_REQ = 25;//TODO F20Config.researchCost.get();
+    private static final int ENERGY_REQ = F20Config.researchCost.get();
 
     private LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.empty();
 

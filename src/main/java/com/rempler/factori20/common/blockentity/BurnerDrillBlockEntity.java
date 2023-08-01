@@ -1,11 +1,14 @@
 package com.rempler.factori20.common.blockentity;
 
+import com.rempler.factori20.common.abstractions.AbstractF20BlockEntity;
 import com.rempler.factori20.common.abstractions.bases.BaseDrillBlockEntity;
 import com.rempler.factori20.common.init.F20BEs;
 import com.rempler.factori20.common.menu.BurnerDrillMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Containers;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -67,6 +70,30 @@ public class BurnerDrillBlockEntity extends BaseDrillBlockEntity {
         };
     }
 
+    @Override
+    public void drops() {
+        super.drops();
+        SimpleContainer inventory = new SimpleContainer(fuelHandler.getSlots());
+        for (int i = 0; i < fuelHandler.getSlots(); i++) {
+            inventory.setItem(i, fuelHandler.getStackInSlot(i));
+        }
+        Containers.dropContents(level, worldPosition, inventory);
+    }
+
+    protected static boolean canInsertBurnable(BurnerDrillBlockEntity blockEntity) {
+        SimpleContainer inventory = new SimpleContainer(blockEntity.fuelHandler.getSlots());
+        boolean truege = true;
+
+        for (int i = 0; i < blockEntity.fuelHandler.getSlots(); i++) {
+            inventory.setItem(i, blockEntity.fuelHandler.getStackInSlot(i));
+            if (!canInsertAmountIntoOutputSlot(inventory, i) || !canInsertItemIntoOutputSlot(inventory, blockEntity.fuelHandler.getStackInSlot(i), i)) {
+                truege = false;
+            }
+        }
+
+        return truege;
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, BurnerDrillBlockEntity pEntity) {
         if (level.isClientSide) {
             return;
@@ -82,7 +109,7 @@ public class BurnerDrillBlockEntity extends BaseDrillBlockEntity {
             }
         }
 
-        if (pEntity.burnTime > 0 && canInsert(pEntity) && shouldDrill(level, pos)) {
+        if (pEntity.burnTime > 0 && canInsert(pEntity) && shouldDrill(level, pos, pEntity)) {
             pEntity.burnTime--;
             tickServer(level, pos, state, pEntity);
             currentBurnTime = pEntity.burnTime;

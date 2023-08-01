@@ -108,7 +108,7 @@ public class ElectricDrillBlockEntity extends BaseDrillBlockEntity {
             return;
         }
 
-        if (hasEnoughEnergy(pEntity) && shouldDrill(level, pos) && canInsert(pEntity)) {
+        if (hasEnoughEnergy(pEntity) && shouldDrill(level, pos, pEntity) && canInsert(pEntity)) {
             tickServer(level, pos, state, pEntity);
             extractEnergy(pEntity);
             setChanged(level, pos, state);

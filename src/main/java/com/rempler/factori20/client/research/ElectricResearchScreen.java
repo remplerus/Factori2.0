@@ -1,17 +1,15 @@
 package com.rempler.factori20.client.research;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.rempler.factori20.api.helpers.MouseHelper;
 import com.rempler.factori20.api.helpers.renderer.EnergyInfoArea;
 import com.rempler.factori20.client.abstractions.AbstractResearchScreen;
+import com.rempler.factori20.common.blockentity.ElectricResearchBlockEntity;
 import com.rempler.factori20.common.menu.ElectricResearchMenu;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-
-import java.util.Optional;
 
 public class ElectricResearchScreen extends AbstractResearchScreen<ElectricResearchMenu> {
     private EnergyInfoArea infoArea;
@@ -23,7 +21,7 @@ public class ElectricResearchScreen extends AbstractResearchScreen<ElectricResea
     private void assignEnergyInfoArea() {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-        infoArea = new EnergyInfoArea(x + 14, y + 14, menu.ebe.getEnergyStorage(), 4, 64);
+        infoArea = new EnergyInfoArea(x + 14, y + 14, ((ElectricResearchBlockEntity)menu.ebe).getEnergyStorage(), 4, 64);
     }
 
     @Override

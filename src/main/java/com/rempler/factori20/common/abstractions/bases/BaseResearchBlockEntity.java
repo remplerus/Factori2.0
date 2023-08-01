@@ -7,6 +7,7 @@ import com.rempler.factori20.common.recipe.ResearchRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
@@ -72,6 +73,16 @@ public abstract class BaseResearchBlockEntity extends AbstractF20BlockEntity {
                 setChanged();
             }
         };
+    }
+
+    @Override
+    public void drops() {
+        super.drops();
+        SimpleContainer inventory = new SimpleContainer(outputHandler.getSlots());
+        for (int i = 0; i < outputHandler.getSlots(); i++) {
+            inventory.setItem(i, outputHandler.getStackInSlot(i));
+        }
+        Containers.dropContents(level, worldPosition, inventory);
     }
 
     @Override

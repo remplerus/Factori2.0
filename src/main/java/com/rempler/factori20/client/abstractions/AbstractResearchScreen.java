@@ -42,7 +42,7 @@ public abstract class AbstractResearchScreen<T extends BaseResearchContainerMenu
         super.renderTooltip(pPoseStack, pX, pY);
         Slot slotUnderMouse = this.getSlotUnderMouse();
         if (slotUnderMouse != null && slotUnderMouse.hasItem()) {
-            //this.renderTooltip(pPoseStack, pX, pY);
+            pPoseStack.renderTooltip(font, slotUnderMouse.getItem(), pX, pY);
         }
     }
 

@@ -49,8 +49,8 @@ public class BurnerDrillMenu extends BaseDrillContainerMenu {
     }
 
     public int getFlameScaled() {
-        int totalTime = this.data.get(1);
-        int actualTime = this.data.get(0);
+        int totalTime = this.dbe.burnData.get(1);
+        int actualTime = this.dbe.burnData.get(0);
 
         return totalTime != 0 && actualTime != 0 ? actualTime*13/totalTime : 0;
     }

@@ -1,6 +1,5 @@
 package com.rempler.factori20.client.research;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.rempler.factori20.client.abstractions.AbstractResearchScreen;
 import com.rempler.factori20.common.menu.BurnerResearchMenu;
 import com.rempler.factori20.utils.F20Constants;
@@ -31,11 +30,11 @@ public class BurnerResearchScreen extends AbstractResearchScreen<BurnerResearchM
         pPoseStack.blit(BACKGROUND_TEXTURE, leftPos + 26, topPos + 28 + 14 - flameHeight, 176, 13 - flameHeight, 14, flameHeight + 1);
     }
 
-    //@Override
-    //protected void renderTooltip(PoseStack pPoseStack, int pX, int pY) {
-    //    super.renderTooltip(pPoseStack, pX, pY);
-    //    if (pX >= leftPos + 26 && pY >= topPos + 28 && pX <= leftPos + 26 + 14 && pY <= topPos + 28 + 14) {
-    //        this.renderTooltip(pPoseStack, Component.translatable("txt.f20.burn_time", (bMenu. / 20)), pX, pY);
-    //    }
-    //}
+    @Override
+    protected void renderTooltip(GuiGraphics pPoseStack, int pX, int pY) {
+        super.renderTooltip(pPoseStack, pX, pY);
+        if (pX >= leftPos + 26 && pY >= topPos + 28 && pX <= leftPos + 26 + 14 && pY <= topPos + 28 + 14) {
+            pPoseStack.renderTooltip(font, Component.translatable("txt.f20.burn_time", (bMenu.getFlameScaled() / 20)), pX, pY);
+        }
+    }
 }

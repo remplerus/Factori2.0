@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -149,25 +150,26 @@ public abstract class BaseDrillBlockEntity extends AbstractF20BlockEntity {
             blockEntity.updateDrillSpeed();
             blockEntity.drillTime = blockEntity.drillSpeed;
         }
-        if (shouldDrill(level, pos) && canInsert(blockEntity)) {
+        if (shouldDrill(level, pos, blockEntity) && canInsert(blockEntity)) {
             if (performDrillingActions(level, pos, blockEntity)) {
                 setChanged(level, pos, state);
             }
         }
     }
 
-    protected static boolean shouldDrill(Level level, BlockPos worldPosition) {
+    protected static boolean shouldDrill(Level level, BlockPos worldPosition, BaseDrillBlockEntity blockEntity) {
+        boolean truege = false;
         ChunkPos chunkPos = new ChunkPos(worldPosition);
         ChunkResourceData resourceData = ChunkResourceGenerator.getChunkResourceData(level.getChunkAt(chunkPos.getWorldPosition()).getPos());
 
-        if (resourceData != null) {
+        if (resourceData != null && !(blockEntity.itemHandler.getStackInSlot(9).isEmpty())) {
             for(ResourceType resourceType : ResourceType.values()) {
                 if (resourceData.getResourceAmount(resourceType) > 0) {
-                    return true;
+                    truege = true;
                 }
             }
         }
-        return false;
+        return truege;
     }
 
     protected void resetProgress() {

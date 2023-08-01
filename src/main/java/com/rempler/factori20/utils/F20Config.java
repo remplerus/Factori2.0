@@ -16,6 +16,7 @@ public class F20Config {
     public static final ForgeConfigSpec.IntValue drillCost;
     public static final ForgeConfigSpec.IntValue researchEnergyStorage;
     public static final ForgeConfigSpec.IntValue researchReceive;
+    public static final ForgeConfigSpec.IntValue researchCost;
 
     public static final ForgeConfigSpec.IntValue max_copper;
     public static final ForgeConfigSpec.IntValue max_tin;
@@ -53,6 +54,8 @@ public class F20Config {
                 .defineInRange("research_energy", 1000000, 0, Integer.MAX_VALUE);
         researchReceive = COMMON_BUILDER.comment("How much energy should a researcher receive")
                 .defineInRange("research_receive", 5000, 0, Integer.MAX_VALUE);
+        researchCost = COMMON_BUILDER.comment("How much energy should a researcher extract on recipe (per tick)")
+                .defineInRange("research_cost", 25, 0, Integer.MAX_VALUE);
         COMMON_BUILDER.pop();
         COMMON_BUILDER.push("Drill Heads");
         iron_speed = COMMON_BUILDER.defineInRange("iron_speed", 300, 20, Integer.MAX_VALUE);
