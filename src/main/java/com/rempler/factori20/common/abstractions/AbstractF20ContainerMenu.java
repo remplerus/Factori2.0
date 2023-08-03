@@ -11,20 +11,7 @@ public abstract class AbstractF20ContainerMenu extends AbstractContainerMenu {
     public AbstractF20ContainerMenu(MenuType<?> menuType, int id, Inventory playerInventory) {
         super(menuType, id);
 
-        // Player inventory
-        int xPos = 8;
-        int yPos = 84;
-        for (int row = 0; row < 3; ++row) {
-            for (int col = 0; col < 9; ++col) {
-                addSlot(new Slot(playerInventory, col + row * 9 + 9, xPos + col * 18, yPos + row * 18));
-            }
-        }
-
-        // Player hotbar
-        yPos = 142;
-        for (int col = 0; col < 9; ++col) {
-            addSlot(new Slot(playerInventory, col, xPos + col * 18, yPos));
-        }
+        addPlayerInventory(playerInventory);
     }
 
     @Override
@@ -53,5 +40,16 @@ public abstract class AbstractF20ContainerMenu extends AbstractContainerMenu {
         slot.onTake(playerIn, sourceStack);
 
         return copySourceStack;
+    }
+
+    protected void addPlayerInventory(Inventory playerInventory) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 9; j++) {
+                this.addSlot(new Slot(playerInventory, j+i*9+9, 8+j*18, 86+i*18));
+            }
+        }
+        for (int k = 0; k < 9; k++) {
+            this.addSlot(new Slot(playerInventory, k, 8+k*18, 144));
+        }
     }
 }

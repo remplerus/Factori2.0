@@ -2,7 +2,6 @@ package com.rempler.factori20.data;
 
 import com.rempler.factori20.common.init.F20Items;
 import com.rempler.factori20.common.item.ResearchItem;
-import com.rempler.factori20.common.recipe.ResearchRecipe;
 import com.rempler.factori20.common.recipe.builder.ResearchRecipeBuilder;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;

@@ -1,6 +1,5 @@
 package com.rempler.factori20.common.init;
 
-import com.rempler.factori20.api.helpers.ColorHelper;
 import com.rempler.factori20.common.item.DrillHeadItem;
 import com.rempler.factori20.common.item.ResearchItem;
 import com.rempler.factori20.common.item.ScannerItem;
@@ -8,7 +7,6 @@ import com.rempler.factori20.common.item.WIPItem;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

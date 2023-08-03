@@ -4,7 +4,6 @@ import com.rempler.factori20.api.helpers.WordHelper;
 import com.rempler.factori20.common.init.F20Items;
 import com.rempler.factori20.common.item.WIPItem;
 import com.rempler.factori20.utils.F20Constants;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.data.LanguageProvider;

@@ -5,7 +5,6 @@ import com.rempler.factori20.api.chunk.ChunkResourceGenerator;
 import com.rempler.factori20.api.chunk.ResourceType;
 import com.rempler.factori20.api.energy.AbstractEnergyItem;
 import com.rempler.factori20.api.helpers.WordHelper;
-import com.rempler.factori20.common.block.ElectricDrillBlock;
 import com.rempler.factori20.common.blockentity.ElectricDrillBlockEntity;
 import com.rempler.factori20.common.init.F20Items;
 import com.rempler.factori20.utils.F20Config;
@@ -73,7 +72,7 @@ public class ScannerItem extends AbstractEnergyItem {
                                 serverPlayer.sendSystemMessage(Component.translatable("txt.f20.no_ores_available"), true);
                             }
                         } else {
-                            serverPlayer.sendSystemMessage(Component.literal("literaly no data :("));
+                            serverPlayer.sendSystemMessage(Component.literal("literally no data :("));
                         }
                     } else {
                         serverPlayer.sendSystemMessage(Component.translatable("txt.f20.scanner.on_cooldown", (stack.getDamageValue() / 20) + 1), true);

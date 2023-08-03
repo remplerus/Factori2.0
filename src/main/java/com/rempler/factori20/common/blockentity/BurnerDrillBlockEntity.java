@@ -1,6 +1,5 @@
 package com.rempler.factori20.common.blockentity;
 
-import com.rempler.factori20.common.abstractions.AbstractF20BlockEntity;
 import com.rempler.factori20.common.abstractions.bases.BaseDrillBlockEntity;
 import com.rempler.factori20.common.init.F20BEs;
 import com.rempler.factori20.common.menu.BurnerDrillMenu;

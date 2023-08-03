@@ -1,17 +1,14 @@
 package com.rempler.factori20.common.item;
 
-import com.rempler.factori20.api.helpers.ColorHelper;
 import com.rempler.factori20.utils.F20Config;
 import net.minecraft.world.item.Item;
 
 public class DrillHeadItem extends Item {
     private final int tier;
-    private final int color;
 
     public DrillHeadItem(Properties properties, int tier) {
         super(properties.stacksTo(1));
         this.tier = tier;
-        this.color = 0;
     }
 
     public int getSpeed() {

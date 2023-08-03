@@ -1,6 +1,5 @@
 package com.rempler.factori20.client.drill;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.rempler.factori20.client.abstractions.AbstractDrillScreen;
 import com.rempler.factori20.common.menu.BurnerDrillMenu;
 import com.rempler.factori20.utils.F20Constants;

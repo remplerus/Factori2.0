@@ -1,6 +1,5 @@
 package com.rempler.factori20.client.drill;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.rempler.factori20.api.helpers.MouseHelper;
 import com.rempler.factori20.api.helpers.renderer.EnergyInfoArea;
 import com.rempler.factori20.client.abstractions.AbstractDrillScreen;
@@ -10,8 +9,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-
-import java.util.Optional;
 
 public class ElectricDrillScreen extends AbstractDrillScreen<ElectricDrillMenu> {
     private EnergyInfoArea infoArea;

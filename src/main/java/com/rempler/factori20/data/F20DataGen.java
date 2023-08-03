@@ -2,7 +2,6 @@ package com.rempler.factori20.data;
 
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.data.DataGenerator;
-//import net.minecraft.data.PackOutput;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
