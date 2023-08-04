@@ -1,6 +1,6 @@
 package com.rempler.factori20.common.blockentity;
 
-import com.rempler.factori20.common.abstractions.bases.BaseResearchBlockEntity;
+import com.rempler.factori20.api.common.bases.BaseResearchBlockEntity;
 import com.rempler.factori20.common.init.F20BEs;
 import com.rempler.factori20.common.menu.BurnerResearchMenu;
 import net.minecraft.core.BlockPos;

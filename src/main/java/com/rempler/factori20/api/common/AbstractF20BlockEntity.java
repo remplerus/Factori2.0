@@ -1,4 +1,4 @@
-package com.rempler.factori20.common.abstractions;
+package com.rempler.factori20.api.common;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

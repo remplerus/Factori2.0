@@ -1,6 +1,6 @@
 package com.rempler.factori20.client.drill;
 
-import com.rempler.factori20.client.abstractions.AbstractDrillScreen;
+import com.rempler.factori20.api.client.AbstractDrillScreen;
 import com.rempler.factori20.common.menu.BurnerDrillMenu;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.client.gui.GuiGraphics;

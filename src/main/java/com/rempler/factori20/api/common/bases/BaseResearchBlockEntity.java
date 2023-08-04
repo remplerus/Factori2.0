@@ -1,6 +1,6 @@
-package com.rempler.factori20.common.abstractions.bases;
+package com.rempler.factori20.api.common.bases;
 
-import com.rempler.factori20.common.abstractions.AbstractF20BlockEntity;
+import com.rempler.factori20.api.common.AbstractF20BlockEntity;
 import com.rempler.factori20.common.init.F20Recipes;
 import com.rempler.factori20.common.item.ResearchItem;
 import com.rempler.factori20.common.recipe.ResearchRecipe;

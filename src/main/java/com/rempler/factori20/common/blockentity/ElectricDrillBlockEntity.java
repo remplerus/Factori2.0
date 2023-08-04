@@ -3,7 +3,7 @@ package com.rempler.factori20.common.blockentity;
 import com.rempler.factori20.api.energy.F20EnergyStorage;
 import com.rempler.factori20.api.helpers.MessagesHelper;
 import com.rempler.factori20.api.sync.EnergySyncS2CPacket;
-import com.rempler.factori20.common.abstractions.bases.BaseDrillBlockEntity;
+import com.rempler.factori20.api.common.bases.BaseDrillBlockEntity;
 import com.rempler.factori20.common.init.F20BEs;
 import com.rempler.factori20.common.menu.ElectricDrillMenu;
 import com.rempler.factori20.utils.F20Config;

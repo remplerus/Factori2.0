@@ -1,9 +1,9 @@
-package com.rempler.factori20.common.abstractions.bases;
+package com.rempler.factori20.api.common.bases;
 
 import com.rempler.factori20.api.chunk.ChunkResourceData;
 import com.rempler.factori20.api.chunk.ChunkResourceGenerator;
 import com.rempler.factori20.api.chunk.ResourceType;
-import com.rempler.factori20.common.abstractions.AbstractF20BlockEntity;
+import com.rempler.factori20.api.common.AbstractF20BlockEntity;
 import com.rempler.factori20.common.item.DrillHeadItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

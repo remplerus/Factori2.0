@@ -1,7 +1,7 @@
 package com.rempler.factori20.common.block;
 
 import com.rempler.factori20.api.helpers.ExceptionHelper;
-import com.rempler.factori20.common.abstractions.bases.BaseResearchBlock;
+import com.rempler.factori20.api.common.bases.BaseResearchBlock;
 import com.rempler.factori20.common.blockentity.BurnerResearchBlockEntity;
 import com.rempler.factori20.common.init.F20BEs;
 import com.rempler.factori20.common.menu.BurnerResearchMenu;

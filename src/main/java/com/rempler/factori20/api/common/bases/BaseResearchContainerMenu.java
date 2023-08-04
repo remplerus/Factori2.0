@@ -1,6 +1,6 @@
-package com.rempler.factori20.common.abstractions.bases;
+package com.rempler.factori20.api.common.bases;
 
-import com.rempler.factori20.common.abstractions.AbstractF20ContainerMenu;
+import com.rempler.factori20.api.common.AbstractF20ContainerMenu;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;

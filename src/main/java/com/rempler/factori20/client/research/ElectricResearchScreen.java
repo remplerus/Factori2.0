@@ -2,7 +2,7 @@ package com.rempler.factori20.client.research;
 
 import com.rempler.factori20.api.helpers.MouseHelper;
 import com.rempler.factori20.api.helpers.renderer.EnergyInfoArea;
-import com.rempler.factori20.client.abstractions.AbstractResearchScreen;
+import com.rempler.factori20.api.client.AbstractResearchScreen;
 import com.rempler.factori20.common.blockentity.ElectricResearchBlockEntity;
 import com.rempler.factori20.common.menu.ElectricResearchMenu;
 import com.rempler.factori20.utils.F20Constants;

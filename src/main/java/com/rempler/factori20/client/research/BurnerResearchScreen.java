@@ -1,6 +1,6 @@
 package com.rempler.factori20.client.research;
 
-import com.rempler.factori20.client.abstractions.AbstractResearchScreen;
+import com.rempler.factori20.api.client.AbstractResearchScreen;
 import com.rempler.factori20.common.menu.BurnerResearchMenu;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.client.gui.GuiGraphics;

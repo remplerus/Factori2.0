@@ -1,7 +1,7 @@
-package com.rempler.factori20.client.abstractions;
+package com.rempler.factori20.api.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.rempler.factori20.common.abstractions.bases.BaseResearchContainerMenu;
+import com.rempler.factori20.api.common.bases.BaseResearchContainerMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;

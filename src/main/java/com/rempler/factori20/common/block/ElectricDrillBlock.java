@@ -1,7 +1,7 @@
 package com.rempler.factori20.common.block;
 
 import com.rempler.factori20.api.helpers.ExceptionHelper;
-import com.rempler.factori20.common.abstractions.bases.BaseDrillBlock;
+import com.rempler.factori20.api.common.bases.BaseDrillBlock;
 import com.rempler.factori20.common.blockentity.ElectricDrillBlockEntity;
 import com.rempler.factori20.common.init.F20BEs;
 import net.minecraft.core.BlockPos;

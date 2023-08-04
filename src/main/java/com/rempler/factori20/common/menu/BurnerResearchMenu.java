@@ -1,6 +1,6 @@
 package com.rempler.factori20.common.menu;
 
-import com.rempler.factori20.common.abstractions.bases.BaseResearchContainerMenu;
+import com.rempler.factori20.api.common.bases.BaseResearchContainerMenu;
 import com.rempler.factori20.common.blockentity.BurnerResearchBlockEntity;
 import com.rempler.factori20.common.init.F20Blocks;
 import com.rempler.factori20.common.init.F20Menus;

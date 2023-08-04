@@ -2,7 +2,7 @@ package com.rempler.factori20.client.drill;
 
 import com.rempler.factori20.api.helpers.MouseHelper;
 import com.rempler.factori20.api.helpers.renderer.EnergyInfoArea;
-import com.rempler.factori20.client.abstractions.AbstractDrillScreen;
+import com.rempler.factori20.api.client.AbstractDrillScreen;
 import com.rempler.factori20.common.menu.ElectricDrillMenu;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.client.gui.GuiGraphics;
