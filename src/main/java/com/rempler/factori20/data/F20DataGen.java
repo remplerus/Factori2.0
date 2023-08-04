@@ -20,5 +20,6 @@ public class F20DataGen {
         gen.addProvider(event.includeClient(), new F20LangGen(output, "en_us"));
 
         gen.addProvider(event.includeServer(), new F20RecipeGen(output));
+        gen.addProvider(event.includeServer(), F20LootTable.F20LootTableProvider.create(output));
     }
 }

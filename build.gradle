@@ -20,6 +20,8 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             property 'forge.enabledGameTestNamespaces', 'factori20'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 factori20 {
                     source sourceSets.main
@@ -32,6 +34,8 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             property 'forge.enabledGameTestNamespaces', 'factori20'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 factori20 {
@@ -45,6 +49,8 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             property 'forge.enabledGameTestNamespaces', 'factori20'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 factori20 {
                     source sourceSets.main
@@ -56,6 +62,8 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             args '--mod', 'factori20', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
             mods {
                 factori20 {
@@ -86,12 +94,21 @@ configurations.all {
 dependencies {
     minecraft "net.neoforged:forge:${mc_version}-${forge_version}"
 
-    // compile against the JEI API but do not include it at runtime
+    //compiles
     compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}"))
     compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}"))
-    // at runtime, use the full JEI jar for Forge
+    compileOnly(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}"))
+    //implementations
+    //implementation(fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}"))
+    //runtimes
     runtimeOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}"))
-    //runtimeOnly fg.deobf("curse.maven:spark-361579:4505309")
+    runtimeOnly(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}"))
+    //runtimeOnly(fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}"))
+    //runtimeOnly(fg.deobf("dev.architectury:architectury-forge:${architectury_version}"))
+    //annotations
+    annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors:3.0.0.15'
+    annotationProcessor "net.neoforged:forge:${mc_version}-${forge_version}"
+    annotationProcessor "com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}"
 }
 
 jar {
@@ -112,4 +129,8 @@ jar.finalizedBy('reobfJar')
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+compileJava {
+    options.compilerArgs << ("-Acrafttweaker.processor.document.output_directory=${file('src/generated/ctDocs')}" as String)
 }
