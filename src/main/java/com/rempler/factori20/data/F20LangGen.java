@@ -17,10 +17,32 @@ public class F20LangGen extends LanguageProvider {
     @Override
     protected void addTranslations() {
         for (RegistryObject<Item> item : F20Items.ITEMS.getEntries()) {
-            if (item.get() instanceof WIPItem wip) {
+            Item getitem = item.get();
+            if (getitem instanceof WIPItem wip) {
                 add(wip, WordHelper.capitalizeFully(wip.toString().replace("_", " ")) + " (WIP)");
             } else {
-                add(item.get(), WordHelper.capitalizeFully(item.get().toString().replace("_", " ")));
+                String name = item.get().toString();
+                if (name.contains("_1_")) {
+                    name = name.replace("research_1_", "logistics_research_");
+                } else if (name.contains("_2_")) {
+                    name = name.replace("research_2_", "mechanics_research_");
+                } else if (name.contains("_3_")) {
+                    name = name.replace("research_3_", "production_research_");
+                } else if (name.contains("_4_")) {
+                    name = name.replace("research_4_", "utility_research_");
+                } else if (name.contains("_5_")) {
+                    name = name.replace("research_5_", "chemical_research_");
+                } else if (name.contains("_6_")) {
+                    name = name.replace("research_6_", "quantum_research_");
+                }
+                if (name.contains("_1")) {
+                    name = name.replace("_1", "");
+                } else if (name.contains("_8")) {
+                    name = "8 " + name.replace("_8", "");
+                } else if (name.contains("_64")) {
+                    name = "64 " + name.replace("_64", "");
+                }
+                add(item.get(), WordHelper.capitalizeFully(name.replace("_", " ")));
             }
         }
         add("tooltip.f20.energyStored", "%d/%d FE");
