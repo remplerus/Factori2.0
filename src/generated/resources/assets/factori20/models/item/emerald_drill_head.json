@@ -1,3 +1,6 @@
 {
-  "parent": "factori20:item/drill_head"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "factori20:item/emerald_drill_head"
+  }
 }
