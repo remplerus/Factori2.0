@@ -62,8 +62,15 @@ public class CTResearchManager implements IRecipeManager, IRecipeHandler<Researc
     public void createRecipe(String name, IItemStack output, IIngredient[] inputs, int researchTime) {
         name = fixRecipeName(name);
         ResourceLocation id = new ResourceLocation("crafttweaker", name);
+        if (!((long) Arrays.stream(inputs).map(IIngredient::asVanillaIngredient).toList().size() <= 3
+                && (long) Arrays.stream(inputs).map(IIngredient::asVanillaIngredient).toList().size() >= 1)) {
+            throw new IllegalArgumentException("Research recipes must have at least 1 or max 3 inputs!");
+        }
+        NonNullList<Ingredient> ingredients = NonNullList.create();
+        for (IIngredient input : inputs) {
+            ingredients.add(input.asVanillaIngredient());
+        }
         CraftTweakerAPI.apply(new ActionAddRecipe(this, new ResearchRecipe(id, output.getInternal(),
-                (NonNullList<Ingredient>) Arrays.stream(inputs).map(IIngredient::asVanillaIngredient).toList(),
-                researchTime), ""));
+                ingredients, researchTime), ""));
     }
 }

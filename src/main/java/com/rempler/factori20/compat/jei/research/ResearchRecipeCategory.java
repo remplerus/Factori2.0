@@ -51,9 +51,9 @@ public class ResearchRecipeCategory implements IRecipeCategory<ResearchRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ResearchRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 65, 35).addIngredients(recipe.getIngredients().get(0));
-        builder.addSlot(RecipeIngredientRole.INPUT, 80, 35).addIngredients(recipe.getIngredients().get(1));
-        builder.addSlot(RecipeIngredientRole.INPUT, 95, 35).addIngredients(recipe.getIngredients().get(2));
+        for (int i = 0; i < recipe.getIngredients().size(); i++) {
+            builder.addSlot(RecipeIngredientRole.INPUT, 65 + (i * 15), 35).addIngredients(recipe.getIngredients().get(i));
+        }
         builder.addSlot(RecipeIngredientRole.OUTPUT, 135, 35).addItemStack(recipe.getOutput());
     }
 }
