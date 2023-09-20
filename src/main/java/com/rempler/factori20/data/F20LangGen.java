@@ -49,6 +49,7 @@ public class F20LangGen extends LanguageProvider {
         add("txt.f20.scanner.on_cooldown", "Scanner is for %ds on cooldown");
         add("txt.f20.burn_time", "Burntime: %ds");
         add("txt.f20.visualizer_amt", "Ore: %d/%d");
+        add("txt.f20.scan_results_header", "-----Scan Results-----");
         add("txt.f20.ores_available", "%d: %d available");
         add("txt.f20.no_ores_available", "No ores in this chunk");
         add("f20.container.drill", "");

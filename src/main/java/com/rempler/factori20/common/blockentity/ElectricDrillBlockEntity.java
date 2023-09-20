@@ -19,6 +19,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ElectricDrillBlockEntity extends BaseDrillBlockEntity {
@@ -91,13 +92,13 @@ public class ElectricDrillBlockEntity extends BaseDrillBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
+    protected void saveAdditional(@NotNull CompoundTag pTag) {
         pTag.putInt("energy", energyStorage.getEnergyStored());
         super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
+    public void load(@NotNull CompoundTag pTag) {
         super.load(pTag);
         energyStorage.setEnergy(pTag.getInt("energy"));
     }

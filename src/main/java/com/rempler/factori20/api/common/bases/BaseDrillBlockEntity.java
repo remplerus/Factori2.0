@@ -2,12 +2,12 @@ package com.rempler.factori20.api.common.bases;
 
 import com.rempler.factori20.api.chunk.ChunkResourceData;
 import com.rempler.factori20.api.chunk.ChunkResourceGenerator;
-import com.rempler.factori20.api.chunk.ResourceType;
 import com.rempler.factori20.api.common.AbstractF20BlockEntity;
 import com.rempler.factori20.common.item.DrillHeadItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
@@ -16,14 +16,17 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public abstract class BaseDrillBlockEntity extends AbstractF20BlockEntity {
     private int drillSpeed = 0;
     private int drillTime = 0;
 
     @Override
-    public Component getDisplayName() {
+    public @NotNull Component getDisplayName() {
         return Component.translatable("f20.container.drill");
     }
 
@@ -60,11 +63,7 @@ public abstract class BaseDrillBlockEntity extends AbstractF20BlockEntity {
 
             @Override
             public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-                return switch (slot) {
-                    case 0, 1, 2, 3, 4, 5, 6, 7, 8 -> false;
-                    case 9 -> stack.getItem() instanceof DrillHeadItem;
-                    default -> super.isItemValid(slot, stack);
-                };
+                return slot != 0 || stack.getItem() instanceof DrillHeadItem;
             }
         };
     }
@@ -74,7 +73,7 @@ public abstract class BaseDrillBlockEntity extends AbstractF20BlockEntity {
     }
 
     protected void updateDrillSpeed() {
-        ItemStack drillItemStack = itemHandler.getStackInSlot(9);
+        ItemStack drillItemStack = itemHandler.getStackInSlot(0);
         if (drillItemStack.getItem() instanceof DrillHeadItem) {
             drillSpeed = ((DrillHeadItem) drillItemStack.getItem()).getSpeed();
         } else {
@@ -83,7 +82,7 @@ public abstract class BaseDrillBlockEntity extends AbstractF20BlockEntity {
     }
 
     protected static boolean performDrillingActions(Level level, BlockPos worldPosition, BaseDrillBlockEntity blockEntity) {
-        ItemStack drillStack = blockEntity.itemHandler.getStackInSlot(9);
+        ItemStack drillStack = blockEntity.itemHandler.getStackInSlot(0);
         if (drillStack.isEmpty() || !(drillStack.getItem() instanceof DrillHeadItem)) {
             return false;
         }
@@ -91,16 +90,16 @@ public abstract class BaseDrillBlockEntity extends AbstractF20BlockEntity {
         if (blockEntity.drillTime <= 0) {
             ChunkResourceData resourceData = ChunkResourceGenerator.getChunkResourceData(new ChunkPos(worldPosition));
             if (resourceData != null) {
-                ResourceType randomResource = resourceData.getRandomResource(level.random);
+                String randomResource = resourceData.getRandomResource(level.random);
                 if (randomResource != null) {
                     resourceData.removeResource(randomResource, 1);
 
-                    ItemStack resourceStack = new ItemStack(randomResource.getItem());
+                    ItemStack resourceStack = new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(randomResource))));
                     boolean placedResource = false;
-                    for (int slot = 0; slot <= 8; slot++) {
+                    for (int slot = 1; slot <= 9; slot++) {
                         ItemStack stackInSlot = blockEntity.itemHandler.getStackInSlot(slot);
                         if (stackInSlot.isEmpty()) {
-                            blockEntity.itemHandler.setStackInSlot(slot, resourceStack);
+                            blockEntity.itemHandler.insertItem(slot, resourceStack, false);
                             placedResource = true;
                             break;
                         } else if (stackInSlot.getItem() == resourceStack.getItem() && (!ItemHandlerHelper.canItemStacksStack(stackInSlot, resourceStack) || stackInSlot.getCount() < 64)) {
@@ -113,7 +112,7 @@ public abstract class BaseDrillBlockEntity extends AbstractF20BlockEntity {
                     if (placedResource) {
                         blockEntity.drillTime = blockEntity.drillSpeed;
                     } else {
-                        blockEntity.drillTime = blockEntity.drillSpeed;
+                        blockEntity.drillTime = 0;
                     }
                 }
                 return true;
@@ -126,26 +125,27 @@ public abstract class BaseDrillBlockEntity extends AbstractF20BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag pTag) {
+    public void load(@NotNull CompoundTag pTag) {
         super.load(pTag);
-
         if (pTag.contains("inventory")) {
-            itemHandler.deserializeNBT(pTag.getCompound("inventory"));
+            itemHandler.deserializeNBT(pTag.getCompound("drill"));
         }
 
         drillTime = pTag.getInt("drillTime");
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
+    protected void saveAdditional(@NotNull CompoundTag pTag) {
         super.saveAdditional(pTag);
         pTag.put("inventory", itemHandler.serializeNBT());
+
         pTag.putInt("drillTime", drillTime);
     }
 
+
     public static void tickServer(Level level, BlockPos pos, BlockState state, BaseDrillBlockEntity blockEntity) {
         if (level.isClientSide) return;
-        if (blockEntity.drillSpeed == 0 || blockEntity.itemHandler.getStackInSlot(9).isEmpty()) {
+        if (blockEntity.drillSpeed == 0 || blockEntity.itemHandler.getStackInSlot(0).isEmpty()) {
             blockEntity.updateDrillSpeed();
             blockEntity.drillTime = blockEntity.drillSpeed;
         }
@@ -161,8 +161,8 @@ public abstract class BaseDrillBlockEntity extends AbstractF20BlockEntity {
         ChunkPos chunkPos = new ChunkPos(worldPosition);
         ChunkResourceData resourceData = ChunkResourceGenerator.getChunkResourceData(level.getChunkAt(chunkPos.getWorldPosition()).getPos());
 
-        if (resourceData != null && !(blockEntity.itemHandler.getStackInSlot(9).isEmpty())) {
-            for(ResourceType resourceType : ResourceType.values()) {
+        if (resourceData != null && !(blockEntity.itemHandler.getStackInSlot(0).isEmpty())) {
+            for(String resourceType : resourceData.serializeNBT().getAllKeys()) {
                 if (resourceData.getResourceAmount(resourceType) > 0) {
                     truege = true;
                 }

@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -66,20 +67,48 @@ public class ChunkResourceGenerator {
 
     private static ChunkResourceData generateChunkResourceData(Random random) {
         ChunkResourceData data = new ChunkResourceData();
-        List<ResourceType> lst = new ArrayList<>();
-        ResourceType[] resourceTypes = ResourceType.values();
-        ResourceType firstResourceType = resourceTypes[random.nextInt(resourceTypes.length)];
+        Map<String, Map<String, Integer>> resourceTypes = ResourceConfig.getResourceTypes();
+        List<String> lst = new ArrayList<>(resourceTypes.keySet());
+        if (lst.isEmpty()) {
+            return data;
+        }
+        String firstResourceType = lst.stream().toList().get(random.nextInt(lst.size()));
         lst.add(firstResourceType);
-        ResourceType secondResourceType;
+        String secondResourceType;
         do {
-            secondResourceType = resourceTypes[random.nextInt(resourceTypes.length)];
-        } while (firstResourceType == secondResourceType);
+            secondResourceType = lst.stream().toList().get(random.nextInt(lst.size()));
+        } while (firstResourceType.equals(secondResourceType));
         lst.add(secondResourceType);
 
-        for (ResourceType resourceType : lst) {
-            if (new Random().nextInt(0, 100) > 20) {
-                int amount = random.nextInt(resourceType.getMaxAmount() - resourceType.getMinAmount() + 1) + resourceType.getMinAmount();
-                data.setResourceAmount(resourceType, amount);
+        Iterator<String> iterator = lst.iterator();
+
+        while (iterator.hasNext()) {
+            String resourceType = iterator.next();
+            if (resourceTypes.containsKey(resourceType)) {
+                int random1;
+                int rarity = resourceTypes.get(resourceType).get("rarity");
+                if (rarity == 0) {
+                    random1 = new Random().nextInt(0, 500);
+                } else if (rarity == 1) {
+                    random1 = new Random().nextInt(0, 50);
+                } else if (rarity == 2) {
+                    random1 = new Random().nextInt(0, 25);
+                } else if (rarity == 100) {
+                    random1 = new Random().nextInt(0, 100);
+                } else if (rarity > 20) {
+                    random1 = new Random().nextInt(0, rarity);
+                } else {
+                    random1 = new Random().nextInt(0, 50);
+                }
+                if (random1 > 20) {
+                    int amount = random.nextInt(resourceTypes.get(resourceType).get("amount") + 1);
+                    data.setResourceAmount(resourceType, amount);
+                } else if (data.getResourceAmount(resourceType) != 0) {
+                    iterator.remove();
+                } else {
+                    data.setResourceAmount(resourceType, 0);
+                    iterator.remove();
+                }
             }
         }
         return data;

@@ -1,6 +1,7 @@
 package com.rempler.factori20;
 
 import com.mojang.logging.LogUtils;
+import com.rempler.factori20.api.chunk.ResourceConfig;
 import com.rempler.factori20.common.init.*;
 import com.rempler.factori20.utils.F20Config;
 import com.rempler.factori20.utils.F20Constants;
@@ -15,13 +16,17 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
+import java.nio.file.Path;
+
 @Mod(F20Constants.MODID)
 public class Factori20 {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public Factori20() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, F20Config.COMMON_CONFIG);
-        F20Config.loadConfig(F20Config.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(F20Constants.MODID + "-common.toml"));
+        Path path = FMLPaths.CONFIGDIR.get().resolve(F20Constants.MODID).toAbsolutePath().normalize();
+        new ResourceConfig(path);
+        F20Config.loadConfig(F20Config.COMMON_CONFIG, path.resolve("config.toml"));
+        //ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, F20Config.COMMON_CONFIG);
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         F20Items.register(bus);
         F20Blocks.register(bus);

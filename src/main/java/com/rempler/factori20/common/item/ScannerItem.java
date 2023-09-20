@@ -2,12 +2,12 @@ package com.rempler.factori20.common.item;
 
 import com.rempler.factori20.api.chunk.ChunkResourceData;
 import com.rempler.factori20.api.chunk.ChunkResourceGenerator;
-import com.rempler.factori20.api.chunk.ResourceType;
 import com.rempler.factori20.api.energy.AbstractEnergyItem;
 import com.rempler.factori20.api.helpers.WordHelper;
 import com.rempler.factori20.common.blockentity.ElectricDrillBlockEntity;
 import com.rempler.factori20.common.init.F20Items;
 import com.rempler.factori20.utils.F20Config;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -51,11 +51,12 @@ public class ScannerItem extends AbstractEnergyItem {
                         boolean success = false;
                         boolean noOreFound = true;
                         if (!(resourceData == null)) {
-                            for (ResourceType resourceType : ResourceType.values()) {
+                            serverPlayer.sendSystemMessage(Component.translatable("txt.f20.scan_results_header").withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
+                            for (String resourceType : resourceData.serializeNBT().getAllKeys()) {
                                 int amount = resourceData.getResourceAmount(resourceType);
                                 if (amount > 0) {
                                     // Zeige die verfügbaren Erze an
-                                    serverPlayer.sendSystemMessage(Component.translatable("txt.f20.ores_available", WordHelper.capitalizeFully(resourceType.getName().replace("_", " ")), amount));
+                                    serverPlayer.sendSystemMessage(Component.translatable("txt.f20.ores_available", WordHelper.capitalizeFully(resourceType.split(":")[1].replace("_", " ")), amount));
                                     success = true;
                                     noOreFound = false;
                                 } else {

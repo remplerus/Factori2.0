@@ -35,6 +35,7 @@
   "txt.f20.burn_time": "Burntime: %ds",
   "txt.f20.no_ores_available": "No ores in this chunk",
   "txt.f20.ores_available": "%d: %d available",
+  "txt.f20.scan_results_header": "-----Scan Results-----",
   "txt.f20.scanner.on_cooldown": "Scanner is for %ds on cooldown",
   "txt.f20.visualizer_amt": "Ore: %d/%d"
 }

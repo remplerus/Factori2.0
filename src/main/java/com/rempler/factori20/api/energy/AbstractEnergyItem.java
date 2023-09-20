@@ -83,8 +83,8 @@ public abstract class AbstractEnergyItem extends Item {
     protected void addEnergyInformation(List<Component> tooltip, ItemStack item) {
         if (getEnergyMax() == 0) {return;}
 
-        item.getCapability(ForgeCapabilities.ENERGY).ifPresent(energy -> {
-            tooltip.add(Component.translatable("tooltip.f20.energyStored", energy.getEnergyStored(), energy.getMaxEnergyStored()).withStyle(ChatFormatting.GRAY));
-        });
+        item.getCapability(ForgeCapabilities.ENERGY).ifPresent(energy ->
+                tooltip.add(Component.translatable("tooltip.f20.energyStored", energy.getEnergyStored(),
+                        energy.getMaxEnergyStored()).withStyle(ChatFormatting.GRAY)));
     }
 }

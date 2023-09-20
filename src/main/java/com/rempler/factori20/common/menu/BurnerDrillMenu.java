@@ -23,7 +23,7 @@ public class BurnerDrillMenu extends BaseDrillContainerMenu {
     private final ContainerData data;
 
     public BurnerDrillMenu(int id, Inventory playerInventory, FriendlyByteBuf buf) {
-        this(id, playerInventory, (BurnerDrillBlockEntity) playerInventory.player.level().getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2), new ItemStackHandler(1));
+        this(id, playerInventory, (BurnerDrillBlockEntity) playerInventory.player.level().getBlockEntity(buf.readBlockPos()), new SimpleContainerData(10), new ItemStackHandler(1));
     }
 
     public BurnerDrillMenu(int id, Inventory playerInventory, BurnerDrillBlockEntity drillBlockEntity, ContainerData data, ItemStackHandler fuelHandler) {

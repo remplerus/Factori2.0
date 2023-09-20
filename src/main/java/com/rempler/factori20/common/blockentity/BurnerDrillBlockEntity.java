@@ -36,6 +36,16 @@ public class BurnerDrillBlockEntity extends BaseDrillBlockEntity {
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return ForgeHooks.getBurnTime(stack, null) > 0;
         }
+
+        @Override
+        public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+            return ForgeHooks.getBurnTime(stack, null)!=0 ? stack : super.insertItem(slot, stack, simulate);
+        }
+
+        @Override
+        public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
     };
 
     public int burnTime = 0;
@@ -150,7 +160,7 @@ public class BurnerDrillBlockEntity extends BaseDrillBlockEntity {
     }
 
     @Override
-    public void load(CompoundTag pTag) {
+    public void load(@NotNull CompoundTag pTag) {
         super.load(pTag);
         burnTime = pTag.getInt("burnTime");
         itemBurnTime = pTag.getInt("itemBurnTime");
@@ -158,7 +168,7 @@ public class BurnerDrillBlockEntity extends BaseDrillBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
+    protected void saveAdditional(@NotNull CompoundTag pTag) {
         pTag.putInt("burnTime", burnTime);
         pTag.putInt("itemBurnTime", itemBurnTime);
         pTag.put("burnItems", fuelHandler.serializeNBT());
