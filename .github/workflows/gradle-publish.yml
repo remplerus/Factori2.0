@@ -7,6 +7,12 @@
 
 name: Gradle Package
 
+env:
+  CI: true
+  BUILD_VERSION: ${{ github.event.release.tag_name }}
+  CHANGELOG: ${{ github.event.release.body }}
+  PUBLISH: true
+
 on:
   push:
     branches:
