@@ -7,8 +7,10 @@ import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -20,14 +22,19 @@ public class F20LootTable extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        for (RegistryObject<Block> block : F20Blocks.BLOCKS.getEntries()) {
+        for (DeferredHolder<Block, ?> block : F20Blocks.BLOCKS.getEntries()) {
             dropSelf(block.get());
         }
     }
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return F20Blocks.BLOCKS.getEntries().stream().map(RegistryObject::get)::iterator;
+        ArrayList<Block> blocks = new ArrayList<>();
+        for (DeferredHolder<Block, ?> block : F20Blocks.BLOCKS.getEntries()) {
+            blocks.add(block.get());
+        }
+
+        return blocks;
     }
 
     public static class F20LootTableProvider {

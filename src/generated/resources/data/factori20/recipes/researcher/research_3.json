@@ -1,0 +1,19 @@
+{
+  "type": "factori20:research",
+  "ingredients": [
+    {
+      "item": "minecraft:emerald"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "output": {
+    "Count": 1,
+    "id": "factori20:research_3_1"
+  },
+  "researchTime": 15000
+}

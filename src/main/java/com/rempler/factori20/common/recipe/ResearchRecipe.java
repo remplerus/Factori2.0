@@ -1,31 +1,32 @@
 package com.rempler.factori20.common.recipe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ResearchRecipe implements Recipe<SimpleContainer> {
-    private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
     private final int researchTime;
 
-    public ResearchRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, int researchTime) {
-        this.id = id;
+    public ResearchRecipe(ItemStack output, List<Ingredient> recipeItems, int researchTime) {
         this.output = output;
-        this.recipeItems = recipeItems;
+        this.recipeItems = NonNullList.copyOf(recipeItems);
         this.researchTime = researchTime;
     }
 
@@ -81,11 +82,6 @@ public class ResearchRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ResourceLocation getId() {
-        return id;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return Serializer.INSTANCE;
     }
@@ -107,31 +103,26 @@ public class ResearchRecipe implements Recipe<SimpleContainer> {
         public static final ResourceLocation ID =
                 new ResourceLocation(F20Constants.MODID, Type.ID);
 
-        @Override
-        public ResearchRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
-
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
-            NonNullList<Ingredient> inputs = NonNullList.withSize(3, Ingredient.EMPTY);
-
-            for (int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
-            }
-
-            int researchTime = GsonHelper.getAsInt(pSerializedRecipe, "researchTime", 2500);
-
-            return new ResearchRecipe(pRecipeId, output, inputs, researchTime);
-        }
+        public static final Codec<ResearchRecipe> CODEC = RecordCodecBuilder.create((p_176610_) -> p_176610_.group(
+                ItemStack.CODEC.fieldOf("output").forGetter((p_176618_) -> p_176618_.output),
+                Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter((p_176616_) -> p_176616_.recipeItems),
+                Codec.INT.fieldOf("researchTime").forGetter((p_176614_) -> p_176614_.researchTime)
+        ).apply(p_176610_, ResearchRecipe::new));
 
         @Override
-        public @Nullable ResearchRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+        public @Nonnull ResearchRecipe fromNetwork(FriendlyByteBuf buf) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
 
             inputs.replaceAll(ignored -> Ingredient.fromNetwork(buf));
 
             ItemStack output = buf.readItem();
             int researchTime = buf.readInt();
-            return new ResearchRecipe(id, output, inputs,researchTime);
+            return new ResearchRecipe(output, inputs,researchTime);
+        }
+
+        @Override
+        public Codec<ResearchRecipe> codec() {
+            return CODEC;
         }
 
         @Override
@@ -142,7 +133,7 @@ public class ResearchRecipe implements Recipe<SimpleContainer> {
                 ing.toNetwork(buf);
             }
             assert Minecraft.getInstance().level != null;
-            buf.writeItemStack(recipe.getOutput(), false);
+            buf.writeItem(recipe.getOutput());
             buf.writeInt(recipe.getResearchTime());
         }
     }

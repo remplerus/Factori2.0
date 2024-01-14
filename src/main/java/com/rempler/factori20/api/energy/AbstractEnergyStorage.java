@@ -1,6 +1,6 @@
 package com.rempler.factori20.api.energy;
 
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.util.function.IntSupplier;
 

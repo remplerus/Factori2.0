@@ -4,7 +4,6 @@ import com.rempler.factori20.api.common.bases.BaseResearchBlockEntity;
 import com.rempler.factori20.common.init.F20BEs;
 import com.rempler.factori20.common.menu.BurnerResearchMenu;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,17 +13,11 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class BurnerResearchBlockEntity extends BaseResearchBlockEntity {
-    protected LazyOptional<IItemHandler> lazyFuelHandler = LazyOptional.empty();
     public final ItemStackHandler fuelHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -33,7 +26,7 @@ public class BurnerResearchBlockEntity extends BaseResearchBlockEntity {
 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return ForgeHooks.getBurnTime(stack, null) > 0;
+            return CommonHooks.getBurnTime(stack, null) > 0;
         }
     };
 
@@ -75,7 +68,7 @@ public class BurnerResearchBlockEntity extends BaseResearchBlockEntity {
 
         if (pEntity.burnTime <= 0) {
             ItemStack fuel = pEntity.fuelHandler.getStackInSlot(0);
-            int burnTimeForItem = ForgeHooks.getBurnTime(fuel, null);
+            int burnTimeForItem = CommonHooks.getBurnTime(fuel, null);
             if (burnTimeForItem > 0) {
                 pEntity.burnTime = burnTimeForItem;
                 pEntity.itemBurnTime = burnTimeForItem;
@@ -98,31 +91,15 @@ public class BurnerResearchBlockEntity extends BaseResearchBlockEntity {
         }
     }
 
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (side == null && lazyFuelHandler.isPresent()) {
-                return lazyItemHandler.cast();
-            } else {
-                return lazyFuelHandler.cast();
-            }
-        }
-
-        return super.getCapability(cap, side);
-    }
 
     @Override
     public void onLoad() {
         super.onLoad();
-        lazyItemHandler = LazyOptional.of(() -> itemHandler);
-        lazyFuelHandler = LazyOptional.of(() -> fuelHandler);
     }
 
     @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        lazyItemHandler.invalidate();
-        lazyFuelHandler.invalidate();
+    public void invalidateCapabilities() {
+        super.invalidateCapabilities();
     }
 
     @Override

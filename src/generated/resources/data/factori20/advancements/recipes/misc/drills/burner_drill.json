@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "charcoal",
-      "has_the_recipe"
+      "has_the_recipe",
+      "charcoal"
     ]
   ],
   "rewards": {
     "recipes": [
       "factori20:drills/burner_drill"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -1,35 +1,34 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "factori20:research_4_1"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "iron": {
+    "drill_head": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:iron_block"
+              "factori20:gold_drill_head"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "factori20:drill_heads/diamond"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "iron",
-      "has_the_recipe"
+      "has_the_recipe",
+      "drill_head"
     ]
   ],
   "rewards": {
     "recipes": [
-      "factori20:research_4_1"
+      "factori20:drill_heads/diamond"
     ]
-  },
-  "sends_telemetry_event": true
+  }
 }

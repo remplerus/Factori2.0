@@ -5,9 +5,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public abstract class BaseResearchContainerMenu extends AbstractF20ContainerMenu {
     protected final Level level;
@@ -22,11 +21,12 @@ public abstract class BaseResearchContainerMenu extends AbstractF20ContainerMenu
 
         addSlot(new SlotItemHandler(outputHandler, 0, 135, 35));
 
-        this.ebe.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            for (int i = 0; i < handler.getSlots(); ++i) {
-                addSlot(new SlotItemHandler(handler, i, 62 + 12, 17 + i * 18));
-            }
-        });
+        //TODO: Fix this
+        //this.ebe.getCapability.getData().ifPresent(handler -> {
+        //    for (int i = 0; i < handler.getSlots(); ++i) {
+        //        addSlot(new SlotItemHandler(handler, i, 62 + 12, 17 + i * 18));
+        //    }
+        //});
 
         addDataSlots(data);
     }

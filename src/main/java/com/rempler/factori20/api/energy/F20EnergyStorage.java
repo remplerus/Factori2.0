@@ -1,6 +1,6 @@
 package com.rempler.factori20.api.energy;
 
-import net.minecraftforge.energy.EnergyStorage;
+import net.neoforged.neoforge.energy.EnergyStorage;
 
 public abstract class F20EnergyStorage extends EnergyStorage {
     public F20EnergyStorage(int capacity, int maxTransfer) {

@@ -5,6 +5,7 @@ import com.rempler.factori20.api.chunk.ChunkResourceGenerator;
 import com.rempler.factori20.api.common.AbstractF20BlockEntity;
 import com.rempler.factori20.common.item.DrillHeadItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -14,9 +15,8 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -94,7 +94,7 @@ public abstract class BaseDrillBlockEntity extends AbstractF20BlockEntity {
                 if (randomResource != null) {
                     resourceData.removeResource(randomResource, 1);
 
-                    ItemStack resourceStack = new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(randomResource))));
+                    ItemStack resourceStack = new ItemStack(Objects.requireNonNull(BuiltInRegistries.ITEM.get(new ResourceLocation(randomResource))));
                     boolean placedResource = false;
                     for (int slot = 1; slot <= 9; slot++) {
                         ItemStack stackInSlot = blockEntity.itemHandler.getStackInSlot(slot);

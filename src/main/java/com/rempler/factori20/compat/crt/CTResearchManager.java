@@ -11,9 +11,11 @@ import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.rempler.factori20.common.recipe.ResearchRecipe;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import org.openzen.zencode.java.ZenCodeType;
 
@@ -25,9 +27,10 @@ import java.util.Optional;
 @ZenCodeType.Name("mods.factori20.ResearchManager")
 @Document("mods/Factori20/ResearchManager")
 public class CTResearchManager implements IRecipeManager, IRecipeHandler<ResearchRecipe> {
+
     @Override
-    public String dumpToCommandString(IRecipeManager<? super ResearchRecipe> manager, ResearchRecipe recipe) {
-        return manager.getCommandString() + recipe.getId().getPath() + recipe.getOutput() + "[" + recipe.getIngredients() + "]";
+    public String dumpToCommandString(IRecipeManager<? super ResearchRecipe> manager, RegistryAccess registryAccess, RecipeHolder<ResearchRecipe> recipe) {
+        return manager.getCommandString() + recipe.id().getPath() + recipe.value().getOutput() + "[" + recipe.value().getIngredients() + "]";
     }
 
     @Override
@@ -36,12 +39,12 @@ public class CTResearchManager implements IRecipeManager, IRecipeHandler<Researc
     }
 
     @Override
-    public Optional<IDecomposedRecipe> decompose(IRecipeManager<? super ResearchRecipe> manager, ResearchRecipe recipe) {
+    public Optional<IDecomposedRecipe> decompose(IRecipeManager<? super ResearchRecipe> manager, RegistryAccess registryAccess, ResearchRecipe recipe) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<ResearchRecipe> recompose(IRecipeManager<? super ResearchRecipe> manager, ResourceLocation name, IDecomposedRecipe recipe) {
+    public Optional<ResearchRecipe> recompose(IRecipeManager<? super ResearchRecipe> manager, RegistryAccess registryAccess, IDecomposedRecipe recipe) {
         return Optional.empty();
     }
 
@@ -70,7 +73,7 @@ public class CTResearchManager implements IRecipeManager, IRecipeHandler<Researc
         for (IIngredient input : inputs) {
             ingredients.add(input.asVanillaIngredient());
         }
-        CraftTweakerAPI.apply(new ActionAddRecipe(this, new ResearchRecipe(id, output.getInternal(),
-                ingredients, researchTime), ""));
+        CraftTweakerAPI.apply(new ActionAddRecipe(this, new RecipeHolder<>(id, new ResearchRecipe(output.getInternal(),
+                ingredients, researchTime))));
     }
 }

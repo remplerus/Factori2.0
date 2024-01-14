@@ -11,12 +11,11 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -25,7 +24,6 @@ public abstract class BaseResearchBlockEntity extends AbstractF20BlockEntity {
     public ItemStackHandler outputHandler;
     protected int progress;
     protected int maxProgress;
-    public LazyOptional<IItemHandler> lazyOutputHandler = LazyOptional.empty();
     @Override
     public Component getDisplayName() {
         return Component.translatable("f20.container.researcher");
@@ -86,15 +84,8 @@ public abstract class BaseResearchBlockEntity extends AbstractF20BlockEntity {
     }
 
     @Override
-    public void onLoad() {
-        super.onLoad();
-        lazyOutputHandler = LazyOptional.of(() -> outputHandler);
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        lazyOutputHandler.invalidate();
+    public void invalidateCapabilities() {
+        super.invalidateCapabilities();
     }
 
     @Override
@@ -119,7 +110,7 @@ public abstract class BaseResearchBlockEntity extends AbstractF20BlockEntity {
     }
 
     protected boolean isRecipeThere(Level level, SimpleContainer inventory) {
-        Optional<ResearchRecipe> recipe = level.getRecipeManager()
+        Optional<RecipeHolder<ResearchRecipe>> recipe = level.getRecipeManager()
                 .getRecipeFor(ResearchRecipe.Type.INSTANCE, inventory, level);
         return recipe.isPresent();
     }
@@ -129,16 +120,16 @@ public abstract class BaseResearchBlockEntity extends AbstractF20BlockEntity {
             if (level.isClientSide) {
                 return;
             }
-            Optional<ResearchRecipe> recipe = level.getRecipeManager()
+            Optional<RecipeHolder<ResearchRecipe>> recipe = level.getRecipeManager()
                     .getRecipeFor(F20Recipes.RESEARCH_RECIPE.get(), inventory, level);
             SimpleContainer outputInventory = new SimpleContainer(1);
             outputInventory.addItem(blockEntity.outputHandler.getStackInSlot(0));
-            if (recipe.isPresent() && hasRecipe(level, outputInventory, blockEntity.outputHandler.getSlots(), recipe.get())) {
+            if (recipe.isPresent() && hasRecipe(level, outputInventory, blockEntity.outputHandler.getSlots(), recipe.get().value())) {
                 if (blockEntity.maxProgress <= 0) {
-                    blockEntity.maxProgress = recipe.get().getResearchTime();
+                    blockEntity.maxProgress = recipe.get().value().getResearchTime();
                 }
                 if (blockEntity.progress >= blockEntity.maxProgress) {
-                    doRecipe(level, inventory, blockEntity, recipe.get());
+                    doRecipe(level, inventory, blockEntity, recipe.get().value());
                     resetProgress(blockEntity);
                 }
                 if (blockEntity.progress < blockEntity.maxProgress) {

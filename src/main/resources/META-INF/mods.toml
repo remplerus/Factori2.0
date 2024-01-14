@@ -20,9 +20,9 @@ description='''${mod_description}'''
     ordering="NONE"
     side="BOTH"
 [[dependencies.factori20]]
-    modId="jei"
+    modId="rei"
     type="optional"
-    versionRange="${jei_range}"
+    versionRange="${rei_range}"
     ordering="NONE"
     side="BOTH"
 

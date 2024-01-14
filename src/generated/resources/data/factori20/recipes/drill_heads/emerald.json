@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "D": {
-      "item": "minecraft:diamond"
+      "item": "factori20:diamond_drill_head"
     },
     "I": {
-      "tag": "forge:storage_blocks/iron"
+      "tag": "forge:storage_blocks/emerald"
     }
   },
   "pattern": [
@@ -15,7 +15,6 @@
     "III"
   ],
   "result": {
-    "item": "factori20:iron_drill_head"
-  },
-  "show_notification": true
+    "item": "factori20:emerald_drill_head"
+  }
 }

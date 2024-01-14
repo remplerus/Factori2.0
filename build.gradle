@@ -33,8 +33,7 @@ runs {
     }
 
     data {
-        workingDirectory project.file('run')
-        programArguments.addAll '--mod', project.modid, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/').getAbsolutePath()
+        programArguments.addAll '--mod', project.modid, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
 }
 
@@ -80,9 +79,9 @@ dependencies {
     runtimeOnly "com.blamejared.crafttweaker:CraftTweaker-neoforge-${mc_version}:${crafttweaker_version}"
 
     //annotations
-    annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors:3.0.0.16'
-    annotationProcessor "net.neoforged:neoforged:"+mc_version.substring(2)+".${neo_version}"
-    annotationProcessor "com.blamejared.crafttweaker:CraftTweaker-neoforge-${mc_version}:${crafttweaker_version}"
+    //annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors:3.0.0.16'
+    //annotationProcessor "net.neoforged:neoforged:"+mc_version.substring(2)+".${neo_version}"
+    //annotationProcessor "com.blamejared.crafttweaker:CraftTweaker-neoforge-${mc_version}:${crafttweaker_version}"
 }
 
 tasks.withType(ProcessResources).configureEach {

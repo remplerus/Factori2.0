@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "factori20:gold_drill_head"
+              "factori20:iron_drill_head"
             ]
           }
         ]
@@ -15,21 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "factori20:drill_heads/diamond_drill_head"
+        "recipe": "factori20:drill_heads/gold"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "drill_head",
-      "has_the_recipe"
+      "has_the_recipe",
+      "drill_head"
     ]
   ],
   "rewards": {
     "recipes": [
-      "factori20:drill_heads/diamond_drill_head"
+      "factori20:drill_heads/gold"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

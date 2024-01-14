@@ -1,14 +1,9 @@
 package com.rempler.factori20.common.item;
 
-import com.rempler.factori20.utils.F20Constants;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.Map;
 
 public class ResearchItem extends Item {
     private final int tier;
@@ -45,8 +40,8 @@ public class ResearchItem extends Item {
     }
 
     public ResearchItem getItem(int temp, int tier) {
-        for (Map.Entry<ResourceKey<Item>, Item> item : ForgeRegistries.ITEMS.getEntries().stream().toList()) {
-            if (item.getValue() instanceof ResearchItem researchItem) {
+        for (Item item : BuiltInRegistries.ITEM.stream().toList()) {
+            if (item instanceof ResearchItem researchItem) {
                 if (researchItem.getTemp() == temp && researchItem.getTier() == tier) {
                     return researchItem;
                 }

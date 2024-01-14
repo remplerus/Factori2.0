@@ -13,13 +13,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractF20BlockEntity extends BlockEntity implements MenuProvider {
-    public LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
     public ContainerData data;
     public ItemStackHandler itemHandler;
 

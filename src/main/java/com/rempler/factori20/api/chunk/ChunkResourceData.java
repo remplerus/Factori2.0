@@ -1,20 +1,20 @@
 package com.rempler.factori20.api.chunk;
 
+import com.rempler.factori20.common.init.F20Attachments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ChunkResourceData implements INBTSerializable<CompoundTag> {
-    private Map<String, Integer> resources;
+    private final Map<String, Integer> resources;
 
     public ChunkResourceData() {
         resources = new HashMap<>();
@@ -48,7 +48,7 @@ public class ChunkResourceData implements INBTSerializable<CompoundTag> {
 
     public static ChunkResourceData get(Level level, BlockPos pos) {
         LevelChunk chunk = level.getChunkAt(pos);
-        return chunk.getCapability(ChunkResourceCapability.INSTANCE).orElse(null);
+        return chunk.getData(F20Attachments.CHUNK_RESOURCES.get());
     }
 
     public void removeResource(String resourceType, int amount) {

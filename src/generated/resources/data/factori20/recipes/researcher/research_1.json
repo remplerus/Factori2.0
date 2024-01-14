@@ -2,17 +2,18 @@
   "type": "factori20:research",
   "ingredients": [
     {
-      "item": "minecraft:emerald"
+      "item": "minecraft:iron_ingot"
     },
     {
-      "item": "minecraft:netherite_ingot"
+      "item": "minecraft:gold_ingot"
     },
     {
       "item": "minecraft:diamond"
     }
   ],
   "output": {
-    "item": "factori20:research_3_1"
+    "Count": 1,
+    "id": "factori20:research_1_1"
   },
-  "researchTime": 15000
+  "researchTime": 2500
 }
