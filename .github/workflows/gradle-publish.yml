@@ -47,11 +47,13 @@ jobs:
         USERNAME: ${{ github.actor }}
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: GitHub Create Tag Release
-      uses: rickstaa/action-create-tag@v1
-      id: "tag_create"
-      with:
-        tag: "latest"
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
+      id: tags
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
+        WITH_V: true
+        DEFAULT_BUMP: patch
     
     - name: Upload to GitHub Releases
       uses: softprops/action-gh-release@v1
