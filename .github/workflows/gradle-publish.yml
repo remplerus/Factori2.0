@@ -47,8 +47,8 @@ jobs:
         USERNAME: ${{ github.actor }}
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    
-    - run: git tag ${{ github.event.inputs.tag }}
+    - name: GitHub Create Tag Release
+      uses: Roang-zero1/github-create-release-action@v3.0.1
     
     - name: Upload to GitHub Releases
       uses: softprops/action-gh-release@v1
