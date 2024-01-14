@@ -1,70 +1,86 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
+name: Release Build
 
-name: Gradle Package
-
+# Thanks for EnderIO for this masterpiece of workflow
 env:
   CI: true
   BUILD_VERSION: ${{ github.event.release.tag_name }}
   CHANGELOG: ${{ github.event.release.body }}
   PUBLISH: true
 
+# Run when release is created on GitHub
 on:
   push:
     branches:
-    - 1.20.4
+      - 'release/*'
 
 jobs:
-  build:
-
+  release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
-    - name: Run chmod to make gradlew executable
-      run: chmod +x ./gradlew
+      - uses: actions/checkout@v2
 
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
-      with:
-        arguments: build
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-    # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
-    # the publishing section of your build.gradle
-    - name: Publish to GitHub Packages
-      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
-      with:
-        arguments: publish
-      env:
-        USERNAME: ${{ github.actor }}
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
 
-    - name: Bump version and push tag
-      uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
-      id: tags
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
-        WITH_V: true
-        DEFAULT_BUMP: patch
-        PRERELEASE: true
-    
-    - name: Upload to GitHub Releases
-      uses: softprops/action-gh-release@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        tag_name: ${{join(steps.tags.outputs.tag)}}
-        files: build/libs/*.jar
+      - name: Clean
+        uses: gradle/gradle-build-action@v2.4.2
+        with:
+          arguments: clean
+
+      - name: Build
+        uses: gradle/gradle-build-action@v2.4.2
+        with:
+          arguments: build
+
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
+        id: tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
+          WITH_V: true
+          DEFAULT_BUMP: patch
+
+      - name: Upload to GitHub Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{join(steps.tags.outputs.tag)}}
+          files: build/libs/*.jar
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release-build
+          path: build/libs/*.jar
+
+  updateReleaseBranch:
+    needs: [release]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get Minecraft Version
+        uses: madhead/read-java-properties@latest
+        id: mc_version
+        with:
+          file: gradle.properties
+          property: minecraft_version
+
+      - uses: actions/checkout@v3
+        with:
+          ref: release/${{ steps.mc_version.outputs.value }}
+          fetch-depth: 0
+
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git merge ${{ github.event.release.tag_name }}
+          git push
