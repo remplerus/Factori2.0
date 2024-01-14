@@ -48,7 +48,10 @@ jobs:
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: GitHub Create Tag Release
-      uses: Roang-zero1/github-create-release-action@v3.0.1
+      uses: rickstaa/action-create-tag@v1
+      id: "tag_create"
+      with:
+        tag: "latest"
     
     - name: Upload to GitHub Releases
       uses: softprops/action-gh-release@v1
