@@ -5,7 +5,6 @@ import com.rempler.factori20.common.menu.ElectricDrillMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -27,18 +26,19 @@ public class EnergySyncS2CPacket {
         buf.writeBlockPos(pos);
     }
 
-    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-        NetworkEvent.Context context = supplier.get();
-        context.enqueueWork(() -> {
-            if (Minecraft.getInstance().level.getBlockEntity(pos) instanceof ElectricDrillBlockEntity edbe) {
-                edbe.setEnergyLevel(energy);
-
-                if (Minecraft.getInstance().player.containerMenu instanceof ElectricDrillMenu menu &&
-                    menu.getBlockEntity().getBlockPos().equals(pos)) {
-                    edbe.setEnergyLevel(energy);
-                }
-            }
-        });
-        return true;
-    }
+    //TODO network rework
+   // public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+   //     NetworkEvent.Context context = supplier.get();
+   //     context.enqueueWork(() -> {
+   //         if (Minecraft.getInstance().level.getBlockEntity(pos) instanceof ElectricDrillBlockEntity edbe) {
+   //             edbe.setEnergyLevel(energy);
+//
+   //             if (Minecraft.getInstance().player.containerMenu instanceof ElectricDrillMenu menu &&
+   //                 menu.getBlockEntity().getBlockPos().equals(pos)) {
+   //                 edbe.setEnergyLevel(energy);
+   //             }
+   //         }
+   //     });
+   //     return true;
+   // }
 }

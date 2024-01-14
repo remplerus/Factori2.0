@@ -1,0 +1,19 @@
+{
+  "type": "factori20:research",
+  "ingredients": [
+    {
+      "item": "minecraft:emerald"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:iron_block"
+    }
+  ],
+  "output": {
+    "Count": 1,
+    "id": "factori20:research_4_1"
+  },
+  "researchTime": 30000
+}

@@ -1,5 +1,6 @@
 package com.rempler.factori20.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.rempler.factori20.api.helpers.ExceptionHelper;
 import com.rempler.factori20.api.common.bases.BaseDrillBlock;
 import com.rempler.factori20.common.blockentity.ElectricDrillBlockEntity;
@@ -10,12 +11,12 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 public class ElectricDrillBlock extends BaseDrillBlock {
@@ -24,11 +25,17 @@ public class ElectricDrillBlock extends BaseDrillBlock {
     }
 
     @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return null;
+    }
+
+    @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide) {
             BlockEntity eb = pLevel.getBlockEntity(pPos);
             if (eb instanceof ElectricDrillBlockEntity dbe) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer, dbe, pPos);
+                //TODO Network rework
+                //openScreen((ServerPlayer) pPlayer, dbe, pPos);
             } else {
                 new ExceptionHelper().illegalException("Our Container provider is missing!");
             }

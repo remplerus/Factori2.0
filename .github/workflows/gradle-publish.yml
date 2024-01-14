@@ -72,7 +72,7 @@ jobs:
         id: mc_version
         with:
           file: gradle.properties
-          property: minecraft_version
+          property: mc_version
 
       - uses: actions/checkout@v3
         with:

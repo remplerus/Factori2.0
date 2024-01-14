@@ -6,8 +6,8 @@ import com.rempler.factori20.common.item.WIPItem;
 import com.rempler.factori20.utils.F20Constants;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.common.data.LanguageProvider;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 public class F20LangGen extends LanguageProvider {
     public F20LangGen(PackOutput output, String locale) {
@@ -16,7 +16,7 @@ public class F20LangGen extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        for (RegistryObject<Item> item : F20Items.ITEMS.getEntries()) {
+        for (DeferredHolder<Item, ?> item : F20Items.ITEMS.getEntries()) {
             Item getitem = item.get();
             if (getitem instanceof WIPItem wip) {
                 add(wip, WordHelper.capitalizeFully(wip.toString().replace("_", " ")) + " (WIP)");

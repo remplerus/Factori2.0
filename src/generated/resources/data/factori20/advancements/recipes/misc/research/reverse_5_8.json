@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "research_5",
-      "has_the_recipe"
+      "has_the_recipe",
+      "research_5"
     ]
   ],
   "rewards": {
     "recipes": [
       "factori20:research/reverse_5_8"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

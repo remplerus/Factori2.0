@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileReader;
@@ -79,6 +80,31 @@ public class ResourceConfig {
         JsonObject jsonObject = new JsonObject();
         JsonArray jsonArray = new JsonArray();
 
+        Map<String, Map<String, Integer>> map = getMap();
+
+        if (resourceTypes.isEmpty()) {
+            resourceTypes.putAll(map);
+        }
+
+        for (String resourceName : resourceTypes.keySet()) { // Iterieren Sie über die Ressourcen-Namen (String)
+            JsonObject resourceObject = new JsonObject();
+            resourceObject.addProperty("item", resourceName); // Verwenden Sie den Ressourcen-Namen (String)
+            resourceObject.addProperty("amount", resourceTypes.get(resourceName).get("amount"));
+            resourceObject.addProperty("rarity", resourceTypes.get(resourceName).get("rarity"));
+            jsonArray.add(resourceObject);
+        }
+
+        jsonObject.add("resources", jsonArray);
+
+        try (FileWriter writer = new FileWriter(configFile)) {
+            gson.toJson(jsonObject, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @NotNull
+    private static Map<String, Map<String, Integer>> getMap() {
         Map<String, Map<String, Integer>> map = new HashMap<>();
         Map<String, Integer> map2 = new HashMap<>();
         map2.put("amount", 10000);
@@ -102,26 +128,7 @@ public class ResourceConfig {
         map5.put("amount", 50);
         map5.put("rarity", 2);
         map.put("minecraft:ancient_debris", map5);
-
-        if (resourceTypes.isEmpty()) {
-            resourceTypes.putAll(map);
-        }
-
-        for (String resourceName : resourceTypes.keySet()) { // Iterieren Sie über die Ressourcen-Namen (String)
-            JsonObject resourceObject = new JsonObject();
-            resourceObject.addProperty("item", resourceName); // Verwenden Sie den Ressourcen-Namen (String)
-            resourceObject.addProperty("amount", resourceTypes.get(resourceName).get("amount"));
-            resourceObject.addProperty("rarity", resourceTypes.get(resourceName).get("rarity"));
-            jsonArray.add(resourceObject);
-        }
-
-        jsonObject.add("resources", jsonArray);
-
-        try (FileWriter writer = new FileWriter(configFile)) {
-            gson.toJson(jsonObject, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return map;
     }
 
     public static Map<String, Map<String, Integer>> getResourceTypes() { // Ändern Sie den Rückgabetyp auf String

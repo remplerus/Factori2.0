@@ -2,37 +2,37 @@ package com.rempler.factori20.utils;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 import javax.annotation.Nonnull;
 import java.nio.file.Path;
 
 public class F20Config {
-    @Nonnull public static final ForgeConfigSpec COMMON_CONFIG;
-    public static final ForgeConfigSpec.IntValue scannerEnergyCost;
-    public static final ForgeConfigSpec.IntValue scannerMaxEnergy;
-    public static final ForgeConfigSpec.IntValue drillEnergyStorage;
-    public static final ForgeConfigSpec.IntValue drillReceive;
-    public static final ForgeConfigSpec.IntValue drillCost;
-    public static final ForgeConfigSpec.IntValue researchEnergyStorage;
-    public static final ForgeConfigSpec.IntValue researchReceive;
-    public static final ForgeConfigSpec.IntValue researchCost;
+    @Nonnull public static final ModConfigSpec COMMON_CONFIG;
+    public static final ModConfigSpec.IntValue scannerEnergyCost;
+    public static final ModConfigSpec.IntValue scannerMaxEnergy;
+    public static final ModConfigSpec.IntValue drillEnergyStorage;
+    public static final ModConfigSpec.IntValue drillReceive;
+    public static final ModConfigSpec.IntValue drillCost;
+    public static final ModConfigSpec.IntValue researchEnergyStorage;
+    public static final ModConfigSpec.IntValue researchReceive;
+    public static final ModConfigSpec.IntValue researchCost;
 
-    public static final ForgeConfigSpec.IntValue max_copper;
-    public static final ForgeConfigSpec.IntValue max_tin;
-    public static final ForgeConfigSpec.IntValue max_lead;
-    public static final ForgeConfigSpec.IntValue max_silicon;
-    public static final ForgeConfigSpec.IntValue max_oil;
-    public static final ForgeConfigSpec.IntValue max_natural_gas;
-    public static final ForgeConfigSpec.IntValue max_iron;
-    public static final ForgeConfigSpec.IntValue max_gold;
-    public static final ForgeConfigSpec.IntValue max_diamond;
-    public static final ForgeConfigSpec.IntValue max_emerald;
-    public static final ForgeConfigSpec.IntValue iron_speed;
-    public static final ForgeConfigSpec.IntValue gold_speed;
-    public static final ForgeConfigSpec.IntValue diamond_speed;
-    public static final ForgeConfigSpec.IntValue emerald_speed;
-    @Nonnull private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
+    public static final ModConfigSpec.IntValue max_copper;
+    public static final ModConfigSpec.IntValue max_tin;
+    public static final ModConfigSpec.IntValue max_lead;
+    public static final ModConfigSpec.IntValue max_silicon;
+    public static final ModConfigSpec.IntValue max_oil;
+    public static final ModConfigSpec.IntValue max_natural_gas;
+    public static final ModConfigSpec.IntValue max_iron;
+    public static final ModConfigSpec.IntValue max_gold;
+    public static final ModConfigSpec.IntValue max_diamond;
+    public static final ModConfigSpec.IntValue max_emerald;
+    public static final ModConfigSpec.IntValue iron_speed;
+    public static final ModConfigSpec.IntValue gold_speed;
+    public static final ModConfigSpec.IntValue diamond_speed;
+    public static final ModConfigSpec.IntValue emerald_speed;
+    @Nonnull private static final ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
 
     static {
         COMMON_BUILDER.push("Scanner");
@@ -79,7 +79,7 @@ public class F20Config {
         COMMON_CONFIG = COMMON_BUILDER.build();
     }
 
-    public static void loadConfig(ForgeConfigSpec spec, Path path) {
+    public static void loadConfig(ModConfigSpec spec, Path path) {
         CommentedFileConfig config = CommentedFileConfig.builder(path).sync().autosave().autoreload().writingMode(WritingMode.REPLACE).build();
 
         config.load();

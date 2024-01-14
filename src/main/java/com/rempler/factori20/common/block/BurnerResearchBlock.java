@@ -1,5 +1,6 @@
 package com.rempler.factori20.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.rempler.factori20.api.helpers.ExceptionHelper;
 import com.rempler.factori20.api.common.bases.BaseResearchBlock;
 import com.rempler.factori20.common.blockentity.BurnerResearchBlockEntity;
@@ -11,17 +12,22 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 public class BurnerResearchBlock extends BaseResearchBlock {
     public BurnerResearchBlock(Properties pProperties) {
         super(pProperties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return null;
     }
 
     @Nullable
@@ -41,7 +47,8 @@ public class BurnerResearchBlock extends BaseResearchBlock {
         if (!pLevel.isClientSide) {
             BlockEntity eb = pLevel.getBlockEntity(pPos);
             if (eb instanceof BurnerResearchBlockEntity dbe) {
-                NetworkHooks.openScreen((ServerPlayer) pPlayer, BurnerResearchMenu.getServerMenu(dbe), pPos);
+                //TODO Network rework
+                //openScreen((ServerPlayer) pPlayer, BurnerResearchMenu.getServerMenu(dbe), pPos);
             } else {
                 new ExceptionHelper().illegalException("Our Container provider is missing!");
             }

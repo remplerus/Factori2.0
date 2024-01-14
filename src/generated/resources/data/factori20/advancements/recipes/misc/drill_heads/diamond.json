@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "drill_head": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "factori20:gold_drill_head"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "factori20:drill_heads/diamond"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "drill_head"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "factori20:drill_heads/diamond"
+    ]
+  }
+}

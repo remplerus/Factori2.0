@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "research_6",
-      "has_the_recipe"
+      "has_the_recipe",
+      "research_6"
     ]
   ],
   "rewards": {
     "recipes": [
       "factori20:research/6_64"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

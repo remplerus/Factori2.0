@@ -23,7 +23,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -36,52 +37,51 @@ public class ScannerItem extends AbstractEnergyItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
-        if (stack.getItem() instanceof ScannerItem scanner && stack.getCapability(ForgeCapabilities.ENERGY).isPresent() && !(pLevel.isClientSide)) {
+        if (stack.getItem() instanceof ScannerItem scanner && !(pLevel.isClientSide)) {
             ServerPlayer serverPlayer = (ServerPlayer) pPlayer;
-            stack.getCapability(ForgeCapabilities.ENERGY).ifPresent(cap -> {
-                if (!(cap.getEnergyStored() < scanner.getEnergyCost(stack))) {
-                    if (stack.getDamageValue() == 0 && canUse(stack, serverPlayer)) {
-                        BlockPos pos = serverPlayer.blockPosition();
-                        // Berechne den Chunk, in dem sich der Spieler befindet
-                        int chunkX = pos.getX() >> 4;
-                        int chunkZ = pos.getZ() >> 4;
+            IEnergyStorage cap = stack.getCapability(Capabilities.EnergyStorage.ITEM);
+            if (!(cap.getEnergyStored() < scanner.getEnergyCost(stack))) {
+                if (stack.getDamageValue() == 0 && canUse(stack, serverPlayer)) {
+                    BlockPos pos = serverPlayer.blockPosition();
+                    // Berechne den Chunk, in dem sich der Spieler befindet
+                    int chunkX = pos.getX() >> 4;
+                    int chunkZ = pos.getZ() >> 4;
 
-                        // Holen Sie sich die ChunkResourceData für den aktuellen Chunk
-                        ChunkResourceData resourceData = ChunkResourceGenerator.getChunkResourceData(new ChunkPos(chunkX, chunkZ));
-                        boolean success = false;
-                        boolean noOreFound = true;
-                        if (!(resourceData == null)) {
-                            serverPlayer.sendSystemMessage(Component.translatable("txt.f20.scan_results_header").withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
-                            for (String resourceType : resourceData.serializeNBT().getAllKeys()) {
-                                int amount = resourceData.getResourceAmount(resourceType);
-                                if (amount > 0) {
-                                    // Zeige die verfügbaren Erze an
-                                    serverPlayer.sendSystemMessage(Component.translatable("txt.f20.ores_available", WordHelper.capitalizeFully(resourceType.split(":")[1].replace("_", " ")), amount));
-                                    success = true;
-                                    noOreFound = false;
-                                } else {
-                                    noOreFound = false;
-                                }
+                    // Holen Sie sich die ChunkResourceData für den aktuellen Chunk
+                    ChunkResourceData resourceData = ChunkResourceGenerator.getChunkResourceData(new ChunkPos(chunkX, chunkZ));
+                    boolean success = false;
+                    boolean noOreFound = true;
+                    if (!(resourceData == null)) {
+                        serverPlayer.sendSystemMessage(Component.translatable("txt.f20.scan_results_header").withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
+                        for (String resourceType : resourceData.serializeNBT().getAllKeys()) {
+                            int amount = resourceData.getResourceAmount(resourceType);
+                            if (amount > 0) {
+                                // Zeige die verfügbaren Erze an
+                                serverPlayer.sendSystemMessage(Component.translatable("txt.f20.ores_available", WordHelper.capitalizeFully(resourceType.split(":")[1].replace("_", " ")), amount));
+                                success = true;
+                                noOreFound = false;
+                            } else {
+                                noOreFound = false;
+                            }
 
-                                stack.setDamageValue(99);
-                                this.applyDamage(stack, serverPlayer);
-                            }
-                            if (success) {
-                                pLevel.playSound(null, serverPlayer.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1, 0.1f);
-                            }
-                            if (noOreFound) {
-                                serverPlayer.sendSystemMessage(Component.translatable("txt.f20.no_ores_available"), true);
-                            }
-                        } else {
-                            serverPlayer.sendSystemMessage(Component.literal("literally no data :("));
+                            stack.setDamageValue(99);
+                            this.applyDamage(stack, serverPlayer);
+                        }
+                        if (success) {
+                            pLevel.playSound(null, serverPlayer.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1, 0.1f);
+                        }
+                        if (noOreFound) {
+                            serverPlayer.sendSystemMessage(Component.translatable("txt.f20.no_ores_available"), true);
                         }
                     } else {
-                        serverPlayer.sendSystemMessage(Component.translatable("txt.f20.scanner.on_cooldown", (stack.getDamageValue() / 20) + 1), true);
+                        serverPlayer.sendSystemMessage(Component.literal("literally no data :("));
                     }
-                } else if (serverPlayer.isCreative() && serverPlayer.isShiftKeyDown()) {
-                    cap.receiveEnergy(100000, false);
+                } else {
+                    serverPlayer.sendSystemMessage(Component.translatable("txt.f20.scanner.on_cooldown", (stack.getDamageValue() / 20) + 1), true);
                 }
-            });
+            } else if (serverPlayer.isCreative() && serverPlayer.isShiftKeyDown()) {
+                cap.receiveEnergy(100000, false);
+            }
         }
         return InteractionResultHolder.pass(stack);
     }
