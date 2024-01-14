@@ -5,8 +5,7 @@ plugins {
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
-
-version = '0.0.1'
+version = createVersion()
 group = 'com.rempler.factori20'
 archivesBaseName = 'factori20'
 
@@ -87,9 +86,6 @@ repositories {
     maven {
         url "https://maven.tterrag.com"
     }
-    maven {
-        url 'https://dogforce-games.com/maven'
-    }
 }
 
 configurations.all {
@@ -100,20 +96,25 @@ configurations.all {
 dependencies {
     minecraft "net.neoforged:forge:${mc_version}-${forge_version}"
 
-    //compiles
+    //jei
     compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}"))
     compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}"))
-    compileOnly(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}"))
-    compileOnly(fg.deobf("com.tterrag.registrate:Registrate:MC${registrate_version}"))
-    compileOnly("dev.gigaherz.graph:GraphLib3:3.0.4")
-    //implementations
-    implementation(fg.deobf("curse.maven:enderio-64578:${enderio_version}"))
-    //implementation(fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}"))
-    //runtimes
     runtimeOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}"))
-    runtimeOnly(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}"))
+
+    //enderio
+    //compileOnly(fg.deobf("com.tterrag.registrate:Registrate:MC${registrate_version}"))
+    //compileOnly("dev.gigaherz.graph:GraphLib3:3.0.4")
+    //implementation(fg.deobf("curse.maven:enderio-64578:${enderio_version}"))
+
+    //kubejs
+    //implementation(fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}"))
     //runtimeOnly(fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}"))
     //runtimeOnly(fg.deobf("dev.architectury:architectury-forge:${architectury_version}"))
+
+    //crafttweaker
+    compileOnly(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}"))
+    runtimeOnly(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}"))
+
     //annotations
     annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors:3.0.0.15'
     annotationProcessor "net.neoforged:forge:${mc_version}-${forge_version}"
@@ -142,4 +143,9 @@ tasks.withType(JavaCompile).configureEach {
 
 compileJava {
     options.compilerArgs << ("-Acrafttweaker.processor.document.output_directory=${file('src/generated/ctDocs')}" as String)
+}
+
+String createVersion() {
+    def thisVersion = project.getProperty("mc_version").substring(2) + "." + project.getProperty("version")
+    return thisVersion
 }
